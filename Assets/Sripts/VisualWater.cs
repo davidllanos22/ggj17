@@ -37,22 +37,26 @@ public class VisualWater : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		waterCalculator.Step ();
+		if (Input.GetKeyDown (KeyCode.Space)) {
 
-		waterCalculator.RetrieveIntensities (ref waterHeight);
+			waterCalculator.Step ();
+
+			waterCalculator.RetrieveIntensities (ref waterHeight);
 
 
-		Vector3[] vertices = waterMesh.vertices;
-		int w = width + 2;
-		int h = height + 2;
-		for (int i = 1; i < w - 1; ++i) {
-			for (int j = 1; j < h - 1; ++j) {
-				Vector3 v = vertices [i + j * w];
-				v.y = waterHeight [i, j] * waterIntensityHeight;
-				vertices [i + j * w] = v;
+			Vector3[] vertices = waterMesh.vertices;
+			int w = width + 2;
+			int h = height + 2;
+			for (int i = 1; i < w - 1; ++i) {
+				for (int j = 1; j < h - 1; ++j) {
+					Vector3 v = vertices [i + j * w];
+					v.y = waterHeight [i - 1, j - 1] * waterIntensityHeight;
+					vertices [i + j * w] = v;
+				}
 			}
+			waterMesh.vertices = vertices;
+
 		}
-		waterMesh.vertices = vertices;
 	}
 
 	void CreateMesh() {
@@ -73,11 +77,11 @@ public class VisualWater : MonoBehaviour {
 			}
 		}
 
-		int[] indices = new int[(w - 1) * (h - 1) * 6];
+		int[] indices = new int[(w - 1) * (h - 1) * 6 * 2];
 		for (int i = 0; i < w - 1; ++i) {
 			for (int j = 0; j < h - 1; ++j) {
 				int baseVertex = i + j * w;
-				int baseIndex = (i + j * (w - 1)) * 6;
+				int baseIndex = (i + j * (w - 1)) * 6 * 2;
 				indices [baseIndex + 0] = baseVertex;
 				indices [baseIndex + 1] = baseVertex + w;
 				indices [baseIndex + 2] = baseVertex + 1;
@@ -85,6 +89,14 @@ public class VisualWater : MonoBehaviour {
 				indices [baseIndex + 3] = baseVertex + 1;
 				indices [baseIndex + 4] = baseVertex + w;
 				indices [baseIndex + 5] = baseVertex + w + 1;
+
+				indices [baseIndex + 6] = baseVertex;
+				indices [baseIndex + 7] = baseVertex + w + 1;
+				indices [baseIndex + 8] = baseVertex + 1;
+
+				indices [baseIndex + 9] = baseVertex;
+				indices [baseIndex + 10] = baseVertex + w;
+				indices [baseIndex + 11] = baseVertex + w + 1;
 			}
 		}
 
