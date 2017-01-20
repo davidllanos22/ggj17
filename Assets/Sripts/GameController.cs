@@ -18,7 +18,7 @@ public class GameController : MonoBehaviour {
 
 		gameCamera = ((GameObject) Instantiate (cameraPrefab.gameObject)).GetComponent<GameCamera> ();
 		gameCamera.transform.SetParent (transform);
-		gameCamera.transform.position = transform.position + new Vector3 (visualWater.width/2 * visualWater.waterCubeSize.x, 0, visualWater.height/2 * visualWater.waterCubeSize.z);
+		gameCamera.transform.position = transform.position + new Vector3 (visualWater.width/2 * visualWater.waterTileSize.x, 0, visualWater.height/2 * visualWater.waterTileSize.z);
 	}
 	
 	// Update is called once per frame
