@@ -55,7 +55,7 @@ public class VisualWater : MonoBehaviour {
 				}
 			}
 			waterMesh.vertices = vertices;
-
+			waterMesh.RecalculateNormals ();
 		}
 	}
 
@@ -107,5 +107,6 @@ public class VisualWater : MonoBehaviour {
 
 
 		GetComponent<MeshFilter> ().mesh = waterMesh;
+		GetComponent<MeshRenderer> ().sortingLayerName = "Default";
 	}
 }
