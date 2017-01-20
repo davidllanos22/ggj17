@@ -22,8 +22,21 @@ public class WaterCPU : MonoBehaviour {
         {-1,1 }
     };
 
-	// Use this for initialization
-	public void Init (int w, int h) {
+    int[,] dirspawns = new int[,]
+    {
+        {0,0,0,0,0},
+        {7,8,1,2,3},
+        {8,1,2,3,4},
+        {1,2,3,4,5},
+        {2,3,4,5,6},
+        {3,4,5,6,7},
+        {4,5,6,7,8},
+        {5,6,7,8,1},
+        {6,7,8,1,2}
+    };
+
+    // Use this for initialization
+    public void Init (int w, int h) {
         width = w; height = h;
         pool = new float[w,h,9];
 
@@ -52,7 +65,7 @@ public class WaterCPU : MonoBehaviour {
                     if(k == 0)
                     {
                         if (pool[i, j, k] < 0) newPool[i, j, k] = 0;
-                        else newPool[i, j, k] = pool[i, j, k] * -.2f;
+                        else newPool[i, j, k] = pool[i, j, k] * -.5f;
                         continue;
                     } else newPool[i, j, k] = 0;
                 }
@@ -66,18 +79,18 @@ public class WaterCPU : MonoBehaviour {
                 for (int k = 1; k < 9; ++k)
                 {
 
-                    for (int t = k-1; t < k+2; ++t)
+                    
+                    for (int t = 0; t < 5; ++t)
                     {
-                        int tt = t;
-                        if (tt == 0) tt = 8;
-                        if (tt == 9) tt = 1;
+                        int tt = dirspawns[k,t];
                         int x = i+ dirvalues[tt, 0];
                         int y = j+ dirvalues[tt, 1];
 
                         if (x >= width || x < 0 || y >= height || y < 0) continue; //rebotes
-                        
-                        newPool[x, y, k] += pool[i,j,k]*((tt == k) ? .5f: .2f);
-                        newPool[x, y, 0] = Mathf.Clamp(newPool[x, y, 0] + newPool[x, y, k], poolmin, poolmax);
+
+                        float reduction = Mathf.Pow(.25f,Mathf.Abs(2 - t));
+                        newPool[x, y, k] += pool[i, j, k] * .6f*reduction;
+                        newPool[x, y, 0] = Mathf.Clamp(newPool[x, y, 0] + pool[x, y, k], poolmin, poolmax);
                     }
                 }
             }
@@ -88,8 +101,7 @@ public class WaterCPU : MonoBehaviour {
 	public void AddWave (Vector2 position, Vector2 wave) {
         float angle = Vector2.Angle(new Vector2(0, 1), wave);
         if (wave.x < 0) angle = 360 - angle;
-        angle = Mathf.Round(angle / 45 + 1);
-
+        angle = Mathf.Floor(angle / 45 + 1);
         pool[(int)position.x, (int)position.y, (int)angle] += wave.magnitude;
 	}
 
@@ -99,7 +111,7 @@ public class WaterCPU : MonoBehaviour {
         {
             for (int j = 0; j < height; ++j)
             {
-                matrix[i, j] = pool[i, j, 0] / poolmax;
+                matrix[i, j] = Mathf.Sin((pool[i, j, 0] / poolmax)*Mathf.PI*.5f);
             }
         }
 	}

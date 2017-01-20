@@ -30,3 +30,8 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+
+
+# Ignored data
+Assets/Local
+Assets/Local.meta
