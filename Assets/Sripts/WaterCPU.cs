@@ -18,6 +18,8 @@ public class WaterCPU : MonoBehaviour {
     bool usePool1 = true;
     bool running = true;
 
+	bool isDirty = false;
+
     List<WaveInfo> wavesToAdd;
     List<WaveInfo> reboundsToAdd;
 
@@ -218,6 +220,8 @@ public class WaterCPU : MonoBehaviour {
                     waterMatrix[i, j] = new Vector3(dirSum.x,dirSum.y,Mathf.Sin((newPool[i, j, 0] / poolmax) * Mathf.PI * .5f));
                 }
             }
+
+			isDirty = true;
         }
 
 
@@ -254,6 +258,8 @@ public class WaterCPU : MonoBehaviour {
                     matrix[i, j] = waterMatrix[i,j];
                 }
             }
+
+			isDirty = false;
         }
 	}
     
@@ -271,4 +277,8 @@ public class WaterCPU : MonoBehaviour {
     {
         running = false;
     }
+
+	public bool IsDirty() {
+		return isDirty;
+	}
 }

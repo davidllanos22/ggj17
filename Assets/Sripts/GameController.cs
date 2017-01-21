@@ -18,9 +18,13 @@ public class GameController : MonoBehaviour {
 
     public Vector3[,] waterDirAndHeight;
 
+	float simulationFPS = 10f;
+	float lastSimulationTime = 0;
+	public UnityEngine.UI.Text simulationFPSText;
 
     // Use this for initialization
     void Awake () {
+		lastSimulationTime = Time.unscaledTime;
 		
 		visualWater = ((GameObject) Instantiate (waterPrefab.gameObject)).GetComponent<VisualWater> ();
         waterCalculator = visualWater.waterCalculator;
@@ -87,6 +91,15 @@ public class GameController : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        waterCalculator.RetrieveIntensities(ref waterDirAndHeight);
+		if (waterCalculator.IsDirty ()) {
+			float currentTime = Time.unscaledTime;
+			float step = currentTime - lastSimulationTime;
+			simulationFPS = 0.9f * simulationFPS + 0.1f * (1f / step);
+			simulationFPSText.text = Mathf.FloorToInt (simulationFPS).ToString();
+
+			waterCalculator.RetrieveIntensities (ref waterDirAndHeight);
+
+			lastSimulationTime = currentTime;
+		}
     }
 }
