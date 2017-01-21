@@ -16,7 +16,7 @@ public class PlayerScript : MonoBehaviour {
     float stepWave = .05f;
 
 	public GameController controller;
-    int playerId = 0;
+    int playerId = 1;
 
     Animator anim;
 
@@ -30,8 +30,9 @@ public class PlayerScript : MonoBehaviour {
 	void Update () {
         Vector3 charDir = new Vector3(Mathf.Round(Input.GetAxis("Horizontal"+playerId)), 0, Mathf.Round(Input.GetAxis("Vertical"+playerId))).normalized;
         if (timer > 0) timer -= Time.deltaTime;
-
-        if (Input.GetAxis("A"+playerId) > 0.1f || Input.GetKey(KeyCode.K))
+        bool swimming = false;
+        bool charging = false;
+        if (Input.GetButton("A"+playerId) || Input.GetKey(KeyCode.K))
         {
             if (rb.velocity.magnitude < maxSpeed) rb.AddForce(Time.deltaTime * charDir * speed);
             if (timer <= 0)
@@ -39,25 +40,28 @@ public class PlayerScript : MonoBehaviour {
                 controller.AddWave(transform.position - charDir*0.5f, -new Vector2(charDir.x, charDir.z) * waveHeight);
                 timer = stepWave;
             }
+
+            swimming = true;
         }        
 
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetButton("X"+playerId))
         {
             potency = Mathf.Min(potency + Time.deltaTime * chargeSpeed, maxPotency);
+            charging = true;
         }
 
-        if (Input.GetKeyUp(KeyCode.Space))
+        if (Input.GetButtonUp("X" + playerId))
         {
             controller.AddWave(transform.position + charDir, new Vector2(charDir.x, charDir.z) * waveHeight * potency * attackMultiplyer);
             rb.AddForce(Time.deltaTime * -charDir * 2 * speed * potency);
             potency = 0;
         }
 
-        SetAnimations(charDir.x, charDir.z);
+        SetAnimations(charDir.x, charDir.z, swimming, charging);
 
     }
 
-    void SetAnimations(float xAxis, float yAxis)
+    void SetAnimations(float xAxis, float yAxis, bool swimming, bool charging)
     {
         bool up = false;
         bool down = false;
@@ -73,5 +77,7 @@ public class PlayerScript : MonoBehaviour {
         anim.SetBool("Down", down);
         anim.SetBool("Left", left);
         anim.SetBool("Right", right);
+        anim.SetBool("Swimming", swimming);
+        anim.SetBool("Charging", charging);
     }
 }
