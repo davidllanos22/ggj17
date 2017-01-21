@@ -8,6 +8,7 @@ public class GameController : MonoBehaviour {
 	public VisualWater waterPrefab;
     public PlayerScript playerPrefab;
     public JelloScript jelloPrefab;
+    public GameObject wallPrefab;
 
     GameCamera gameCamera;
 	VisualWater visualWater;
@@ -26,6 +27,8 @@ public class GameController : MonoBehaviour {
 		visualWater.transform.SetParent(transform);
         visualWater.Init(this);
 
+        GenerateWalls();
+
         players = new PlayerScript[1];
         for(int i = 0; i < 1; ++i)
         {
@@ -40,11 +43,34 @@ public class GameController : MonoBehaviour {
         jello.transform.position = new Vector3(visualWater.width / 2 * visualWater.waterTileSize.x, 0, visualWater.height*.4f * visualWater.waterTileSize.z);
         jello.GetComponent<ImpulseSystem>().Init(visualWater.waterTileSize, visualWater.waterIntensityHeight, this);
 
-
         gameCamera = ((GameObject) Instantiate (cameraPrefab.gameObject)).GetComponent<GameCamera> ();
 		gameCamera.transform.SetParent (transform);
 		gameCamera.transform.position = transform.position + new Vector3 (visualWater.width / 2 * visualWater.waterTileSize.x, 0, visualWater.height / 2 * visualWater.waterTileSize.z);
 	}
+
+    void GenerateWalls()
+    {
+        GameObject wall = ((GameObject)Instantiate(wallPrefab.gameObject));
+        wall.transform.SetParent(transform);
+        wall.transform.position = new Vector3(visualWater.width / 2 * visualWater.waterTileSize.x, 0, -.5f * visualWater.waterTileSize.z);
+        wall.transform.localScale = new Vector3(visualWater.width, 10, visualWater.waterTileSize.z);
+
+        wall = ((GameObject)Instantiate(wallPrefab.gameObject));
+        wall.transform.SetParent(transform);
+        wall.transform.position = new Vector3(visualWater.width / 2 * visualWater.waterTileSize.x, 0, (visualWater.height + .5f) * visualWater.waterTileSize.z);
+        wall.transform.localScale = new Vector3(visualWater.width, 10, visualWater.waterTileSize.z);
+
+        wall = ((GameObject)Instantiate(wallPrefab.gameObject));
+        wall.transform.SetParent(transform);
+        wall.transform.position = new Vector3(-.5f * visualWater.waterTileSize.x, 0, visualWater.height / 2 * visualWater.waterTileSize.z);
+        wall.transform.localScale = new Vector3(visualWater.waterTileSize.x, 10, visualWater.height);
+
+        wall = ((GameObject)Instantiate(wallPrefab.gameObject));
+        wall.transform.SetParent(transform);
+        wall.transform.position = new Vector3((visualWater.width+.5f) * visualWater.waterTileSize.x, 0, visualWater.height / 2 * visualWater.waterTileSize.z);
+        wall.transform.localScale = new Vector3(visualWater.waterTileSize.x, 10, visualWater.height);
+
+    }
 
     private void Start()
     {

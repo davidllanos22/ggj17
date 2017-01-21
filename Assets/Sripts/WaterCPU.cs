@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class WaterCPU : MonoBehaviour {
 
+    public float tilesPerSecond = 10;
+    public float reboundReduction = .8f;
+    static private long TICKSINSECONDS = 10000000;
+
     int width, height;
     float poolmin = -10;
     float poolmax = 50;
@@ -56,6 +60,32 @@ public class WaterCPU : MonoBehaviour {
         {6,7,8,1,2}
     };
 
+    int[,] dirrebound = new int[,] //x colision, y colision, xy colision
+    {
+        {0,0,0},
+        {1,5,5},
+        {8,4,6},
+        {7,3,7},
+        {6,2,8},
+        {5,1,1},
+        {4,8,2},
+        {3,7,3},
+        {2,6,4}
+    };
+
+    int[,] dirColisions = new int[,] //0: negative colision, 1: positive colision, 2: no colision
+    {
+        {2,2},
+        {2,1},
+        {1,1},
+        {1,2},
+        {1,0},
+        {2,0},
+        {0,0},
+        {0,2},
+        {0,1}
+    };
+
     // Use this for initialization
     public void Init (int w, int h) {
         width = w; height = h;
@@ -81,8 +111,12 @@ public class WaterCPU : MonoBehaviour {
 
     void Waves()
     {
+        long startTime;
+        long endTime;
         while (running)
         {
+
+            startTime = System.DateTime.Now.Ticks;
             lock (wavesToAdd) {
                 foreach (WaveInfo wi in wavesToAdd)
                 {
@@ -91,6 +125,8 @@ public class WaterCPU : MonoBehaviour {
                 wavesToAdd.Clear();
             }
             Step();
+            endTime = System.DateTime.Now.Ticks;
+            while (endTime - startTime < TICKSINSECONDS / tilesPerSecond) endTime = System.DateTime.Now.Ticks;
         }
     }
 	
@@ -99,10 +135,20 @@ public class WaterCPU : MonoBehaviour {
         float[,,] oldPool = (usePool1) ? pool1 : pool2;
         float[,,] newPool = (usePool1) ? pool2 : pool1;
 
+        bool[] xCols = new bool[3];
+        bool[] yCols = new bool[3];
+        xCols[2] = false;
+        yCols[2] = false;
+
         for (int i = 0; i < width; ++i)
         {
             for (int j = 0; j < height; ++j)
             {
+                xCols[1] = i == (width - 1);
+                xCols[0] = i == 0;
+                yCols[1] = j == (height - 1);
+                yCols[0] = j == 0;
+
                 for (int k = 0; k < 9; ++k)
                 {
                     if(k == 0)
@@ -111,6 +157,11 @@ public class WaterCPU : MonoBehaviour {
                         else newPool[i, j, k] = oldPool[i, j, k] * -.5f;
                         continue;
                     } else newPool[i, j, k] = 0;
+
+                    //Rebound
+                    if (xCols[dirColisions[k, 0]] && yCols[dirColisions[k, 1]]) oldPool[i, j, dirrebound[k, 2]] += oldPool[i, j, k] * reboundReduction;
+                    else if (yCols[dirColisions[k, 1]]) oldPool[i, j, dirrebound[k, 1]] += oldPool[i, j, k] * reboundReduction;
+                    else if (xCols[dirColisions[k, 0]]) oldPool[i, j, dirrebound[k, 0]] += oldPool[i, j, k] * reboundReduction;
                 }
             }
         }
@@ -121,15 +172,13 @@ public class WaterCPU : MonoBehaviour {
             {
                 for (int k = 1; k < 9; ++k)
                 {
-
-                    
                     for (int t = 0; t < 5; ++t)
                     {
                         int tt = dirspawns[k,t];
                         int x = i+ dirvalues[tt, 0];
-                        int y = j+ dirvalues[tt, 1];
+                        int y = j+ dirvalues[tt, 1];                        
 
-                        if (x >= width || x < 0 || y >= height || y < 0) continue; //rebotes
+                        if (x >= width || x < 0 || y >= height || y < 0) continue; //out of bounds
 
                         float reduction = Mathf.Pow(.25f,Mathf.Abs(2 - t));
                         newPool[x, y, k] += oldPool[i, j, k] * .6f*reduction;

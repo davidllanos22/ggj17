@@ -26,8 +26,8 @@ public class ImpulseSystem : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 
-        int xTilePos = (int)transform.position.x;
-        int yTilePos = (int)transform.position.z;
+        int xTilePos = (int)(transform.position.x * waterTileSize.x);
+        int yTilePos = (int)(transform.position.z * waterTileSize.z);
 
         Vector3 pos = transform.position;
         Vector3 tileValue = gc.waterDirAndHeight[xTilePos, yTilePos];
@@ -35,6 +35,5 @@ public class ImpulseSystem : MonoBehaviour {
         transform.position = pos;
 
         rig.AddForce(new Vector3(tileValue.x, 0, tileValue.y)* waterImpulse, ForceMode.Impulse);
-        //Vector3(width / 2 * waterTileSize.x, 0, height / 2 * waterTileSize.z);
     }
 }
