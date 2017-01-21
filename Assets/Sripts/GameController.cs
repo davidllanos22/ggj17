@@ -40,13 +40,13 @@ public class GameController : MonoBehaviour {
 			players [i].controller = this;
             players[i].transform.SetParent(transform);
             players[i].transform.position =  new Vector3(visualWater.width / 2 * visualWater.waterTileSize.x, 0, visualWater.height / 2 * visualWater.waterTileSize.z);
-            players[i].GetComponent<ImpulseSystem>().Init(visualWater.waterTileSize, visualWater.waterIntensityHeight, this);
+			players[i].GetComponent<ImpulseSystem>().Init(visualWater.waterTileSize, visualWater.waterIntensityHeight, this, visualWater.width, visualWater.height);
         }
 
         jello = ((GameObject)Instantiate(jelloPrefab.gameObject)).GetComponent<JelloScript>();
         jello.transform.SetParent(transform);
         jello.transform.position = new Vector3(visualWater.width / 2 * visualWater.waterTileSize.x, 0, visualWater.height*.4f * visualWater.waterTileSize.z);
-        jello.GetComponent<ImpulseSystem>().Init(visualWater.waterTileSize, visualWater.waterIntensityHeight, this);
+		jello.GetComponent<ImpulseSystem>().Init(visualWater.waterTileSize, visualWater.waterIntensityHeight, this, visualWater.width, visualWater.height);
 
         gameCamera = ((GameObject) Instantiate (cameraPrefab.gameObject)).GetComponent<GameCamera> ();
 		gameCamera.transform.SetParent (transform);

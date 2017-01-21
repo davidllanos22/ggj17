@@ -8,6 +8,7 @@ public class ImpulseSystem : MonoBehaviour {
     Vector3 waterTileSize;
     float waterIntensityHeight;
     GameController gc;
+	int width, height;
 
     Rigidbody rig;
 
@@ -16,11 +17,13 @@ public class ImpulseSystem : MonoBehaviour {
         rig = GetComponent<Rigidbody>();
     }
 
-    public void Init(Vector3 wts, float wih, GameController gameC)
+	public void Init(Vector3 wts, float wih, GameController gameC, int w, int h)
     {
         waterTileSize = wts;
         waterIntensityHeight = wih;
         gc = gameC;
+		width = w;
+		height = h;
     }
 
     // Update is called once per frame
@@ -28,8 +31,8 @@ public class ImpulseSystem : MonoBehaviour {
 
 		Vector2 waterPos = gc.WorldPosToWaterPos (transform.position);
 
-        int xTilePos = (int)(transform.position.x * waterTileSize.x);
-        int yTilePos = (int)(transform.position.z * waterTileSize.z);
+		int xTilePos = Mathf.Clamp (Mathf.RoundToInt (waterPos.x), 0, width - 1);//;(int)(transform.position.x * waterTileSize.x);
+		int yTilePos = Mathf.Clamp (Mathf.RoundToInt (waterPos.y), 0, height - 1);//Mathf.RoundToInt (waterPos.x);(int)(transform.position.z * waterTileSize.z);
 
         Vector3 pos = transform.position;
         Vector3 tileValue = gc.waterDirAndHeight[xTilePos, yTilePos];
