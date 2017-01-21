@@ -5,10 +5,10 @@ using UnityEngine;
 public class PlayerScript : MonoBehaviour {
     Rigidbody rb;
     float maxSpeed = 100f;
-    float speed = 8000f;
-    float waveHeight = 1f;
+    float speed = 5000f;
+    float waveHeight = 5f;
     float potency = 0f;
-    float chargeSpeed = 5f;
+    float chargeSpeed = 10f;
     float maxPotency = 15f;
 
 	public GameController controller;
@@ -35,7 +35,7 @@ public class PlayerScript : MonoBehaviour {
 
         if (Input.GetKeyUp(KeyCode.Space))
         {
-            controller.AddWave(transform.position + charDir, new Vector2(charDir.x, charDir.z) * waveHeight * potency);
+            controller.AddWave(transform.position + charDir, new Vector2(charDir.x, charDir.z) * waveHeight * potency * 5);
             rb.AddForce(Time.deltaTime * -charDir * 2 * speed * potency);
             potency = 0;
         }

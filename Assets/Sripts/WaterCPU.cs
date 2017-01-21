@@ -9,7 +9,7 @@ public class WaterCPU : MonoBehaviour {
     static private long TICKSINSECONDS = 10000000;
 
     int width, height;
-    float poolmin = -10;
+    float poolmin = -25;
     float poolmax = 50;
     float threshold = .003f;
     float[,,] pool1;
