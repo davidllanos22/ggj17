@@ -127,29 +127,6 @@ public class GameController : MonoBehaviour {
 			lastSimulationTime = currentTime;
 			visualWater.UpdateMesh ();
 		}
-
-        for (int i = 0; i < numPlayers; i++)
-        {
-            if (respanTimers[i] > 0)
-            {
-                respanTimers[i] -= Time.deltaTime;
-                if (respanTimers[i] <= 0)
-                {
-                    players[i] = ((GameObject)Instantiate(playerPrefab.gameObject)).GetComponent<PlayerScript>();
-                    players[i].controller = this;
-                    players[i].transform.SetParent(transform);
-                    players[i].transform.position = new Vector3(visualWater.width / 2 * visualWater.waterTileSize.x + 3 * i, 0, visualWater.height / 2 * visualWater.waterTileSize.z);
-                    players[i].GetComponent<ImpulseSystem>().Init(visualWater.waterIntensityHeight, this, visualWater.width, visualWater.height);
-                    players[i].playerId = i + 1;
-
-                    players[i].gameObject.name = "player" + (i + 1).ToString();
-                    players[i].transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = badges[i];
-
-                    players[i].iFrames = 2;
-                    respanTimers[i] = 0;
-                }
-            }
-        }
     }
 
 	public void AddWave(Vector3 pos, Vector2 dir) {
@@ -171,6 +148,5 @@ public class GameController : MonoBehaviour {
     public void waitRespawn(int id)
     {
         playerDeaths[id-1]++;
-        respanTimers[id-1] = 3;
     }
 }
