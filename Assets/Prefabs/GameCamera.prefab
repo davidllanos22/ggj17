@@ -62,7 +62,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 20
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -103,7 +103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1a2265e56fe1453d8d5ba0a58ce97a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deltaPos: {x: 0, y: 6, z: -10}
+  deltaPos: {x: 0, y: 6, z: -21}
 --- !u!124 &124008193280092616
 Behaviour:
   m_ObjectHideFlags: 1

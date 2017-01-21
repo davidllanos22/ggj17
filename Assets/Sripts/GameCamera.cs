@@ -6,12 +6,16 @@ public class GameCamera : MonoBehaviour {
 
 	public Vector3 deltaPos;
 
+	Vector3 basePos;
+
+	void Start() {
+		basePos = transform.position;
+	}
+
 	// Use this for initialization
-	void Start () {
-		Vector3 pos = transform.position;
+	void Update () {
+		transform.position = basePos + deltaPos;
 
-		transform.position += deltaPos;
-
-		transform.LookAt (pos);
+		transform.LookAt (basePos);
 	}
 }
