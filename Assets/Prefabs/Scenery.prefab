@@ -52,7 +52,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldHeight: 0.75
-  backFloorWidth: 2
+  backFloorWidth: 4
   poolWall: {fileID: 1154462956094698, guid: 59a3b1d91569847c7aa1ad22a1d67886, type: 2}
   floor: {fileID: 1566733957307496, guid: 6ca930d2a221d4f978d4cc001f5ce889, type: 2}
   roomWall: {fileID: 1478094131118130, guid: 2dd42f186df6b40249d4cd9799c825c6, type: 2}
+  stairPrefab: {fileID: 1479874643715054, guid: 1ce66db8b99634f5d9a474258738bffc,
+    type: 2}
