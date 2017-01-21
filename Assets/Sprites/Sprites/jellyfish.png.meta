@@ -1,12 +1,12 @@
 fileFormatVersion: 2
-guid: 7bf6717fcbe1943d8b3dc0bfb3034fc2
-timeCreated: 1484956540
+guid: 4c68e9269e3cc426588c565f60f5cb3d
+timeCreated: 1484957289
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: player 0
-    21300002: player 1
-    21300004: player 2
+    21300000: jellyfish 0
+    21300002: jellyfish 1
+    21300004: jellyfish 2
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -54,7 +54,7 @@ TextureImporter:
   textureFormatSet: 0
   platformSettings:
   - buildTarget: DefaultTexturePlatform
-    maxTextureSize: 128
+    maxTextureSize: 64
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -73,40 +73,40 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: player 0
+      name: jellyfish 0
       rect:
         serializedVersion: 2
         x: 0
-        y: 64
-        width: 64
-        height: 64
-      alignment: 7
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: player 1
+      name: jellyfish 1
       rect:
         serializedVersion: 2
-        x: 64
-        y: 64
-        width: 64
-        height: 64
-      alignment: 7
+        x: 32
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: player 2
+      name: jellyfish 2
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64
-        height: 64
-      alignment: 7
+        width: 32
+        height: 32
+      alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
