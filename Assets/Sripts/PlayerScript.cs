@@ -26,6 +26,8 @@ public class PlayerScript : MonoBehaviour
     SpriteRenderer rend;
     bool stateI = true;
 
+    Vector3 lookDir;
+
     Animator anim;
 
     // Use this for initialization
@@ -34,21 +36,23 @@ public class PlayerScript : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         anim = transform.GetChild(0).GetComponent<Animator>();
         rend = GetComponentInChildren<SpriteRenderer>();
+        lookDir = new Vector3();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 charDir = new Vector3(Mathf.Round(Input.GetAxis("Horizontal" + playerId)), 0, Mathf.Round(Input.GetAxis("Vertical" + playerId))).normalized;
+        Vector3 charDir = new Vector3(Input.GetAxis("Horizontal" + playerId), 0, Input.GetAxis("Vertical" + playerId));
+        if (charDir.magnitude > 0.2f) lookDir = new Vector3(Mathf.Round(charDir.normalized.x), 0, Mathf.Round(charDir.normalized.z)) ;
         if (timer > 0) timer -= Time.deltaTime;
         bool swimming = false;
         bool charging = false;
         if (Input.GetButton("A" + playerId) || Input.GetKey(KeyCode.K))
         {
-            if (rb.velocity.magnitude < maxSpeed) rb.AddForce(Time.deltaTime * charDir * speed);
+            if (rb.velocity.magnitude < maxSpeed) rb.AddForce(Time.deltaTime * lookDir * speed);
             if (timer <= 0)
             {
-                controller.AddWave(transform.position - charDir * 0.5f, -new Vector2(charDir.x, charDir.z) * waveHeight);
+                controller.AddWave(transform.position - lookDir * 0.5f, -new Vector2(lookDir.x, lookDir.z) * waveHeight);
                 timer = stepWave;
             }
 
@@ -63,12 +67,12 @@ public class PlayerScript : MonoBehaviour
 
         if (Input.GetButtonUp("X" + playerId))
         {
-            controller.AddWave(transform.position + charDir, new Vector2(charDir.x, charDir.z) * waveHeight * potency * attackMultiplyer);
-            rb.AddForce(Time.deltaTime * -charDir * 2 * speed * potency);
+            controller.AddWave(transform.position + lookDir, new Vector2(lookDir.x, lookDir.z) * waveHeight * potency * attackMultiplyer);
+            rb.AddForce(Time.deltaTime * -lookDir * 2 * speed * potency);
             potency = 0;
         }
 
-        SetAnimations(charDir.x, charDir.z, swimming, charging);
+        SetAnimations(lookDir.x, lookDir.z, swimming, charging);
 
         if (iFrames > 0)
         {
