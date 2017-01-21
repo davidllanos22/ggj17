@@ -5,7 +5,6 @@ using UnityEngine;
 public class ImpulseSystem : MonoBehaviour {
 
     public float waterImpulse = 5;
-    Vector3 waterTileSize;
     float waterIntensityHeight;
     GameController gc;
 	int width, height;
@@ -17,9 +16,8 @@ public class ImpulseSystem : MonoBehaviour {
         rig = GetComponent<Rigidbody>();
     }
 
-	public void Init(Vector3 wts, float wih, GameController gameC, int w, int h)
+	public void Init(float wih, GameController gameC, int w, int h)
     {
-        waterTileSize = wts;
         waterIntensityHeight = wih;
         gc = gameC;
 		width = w;
@@ -34,7 +32,11 @@ public class ImpulseSystem : MonoBehaviour {
 		int xTilePos = Mathf.Clamp (Mathf.RoundToInt (waterPos.x), 0, width - 1);//;(int)(transform.position.x * waterTileSize.x);
 		int yTilePos = Mathf.Clamp (Mathf.RoundToInt (waterPos.y), 0, height - 1);//Mathf.RoundToInt (waterPos.x);(int)(transform.position.z * waterTileSize.z);
 
+        Vector2 worldPos = gc.WaterPosToWorldPos(new Vector2(xTilePos, yTilePos));
+
         Vector3 pos = transform.position;
+        if (waterPos.x < 0 || waterPos.x > width - 1) pos.x = worldPos.x;
+        if (waterPos.y < 0 || waterPos.y > height - 1) pos.y = worldPos.y;
         Vector3 tileValue = gc.waterDirAndHeight[xTilePos, yTilePos];
         pos.y = tileValue.z * waterIntensityHeight;
         transform.position = pos;

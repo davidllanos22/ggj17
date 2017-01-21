@@ -36,19 +36,18 @@ public class GameController : MonoBehaviour {
 		visualWater.transform.SetParent(transform);
         visualWater.Init(this);
 
-        GenerateWalls();
+        //GenerateWalls();
 
         players = new PlayerScript[numPlayers];
         playerDeaths = new int[numPlayers];
         respanTimers = new float[numPlayers];
-        GameObject badge;
         for(int i = 0; i < numPlayers; ++i)
         {
             players[i] = ((GameObject)Instantiate(playerPrefab.gameObject)).GetComponent<PlayerScript>();
 			players[i].controller = this;
             players[i].transform.SetParent(transform);
             players[i].transform.position =  new Vector3(visualWater.width / 2 * visualWater.waterTileSize.x + 3*i, 0, visualWater.height / 2 * visualWater.waterTileSize.z);
-			players[i].GetComponent<ImpulseSystem>().Init(visualWater.waterTileSize, visualWater.waterIntensityHeight, this, visualWater.width, visualWater.height);
+			players[i].GetComponent<ImpulseSystem>().Init(visualWater.waterIntensityHeight, this, visualWater.width, visualWater.height);
             players[i].playerId = i + 1;
             players[i].gameObject.name = "player" + (i+1).ToString();
 
@@ -61,7 +60,7 @@ public class GameController : MonoBehaviour {
         jello = ((GameObject)Instantiate(jelloPrefab.gameObject)).GetComponent<JelloScript>();
         jello.transform.SetParent(transform);
         jello.transform.position = new Vector3(visualWater.width / 2 * visualWater.waterTileSize.x, 0, visualWater.height*.4f * visualWater.waterTileSize.z);
-		jello.GetComponent<ImpulseSystem>().Init(visualWater.waterTileSize, visualWater.waterIntensityHeight, this, visualWater.width, visualWater.height);
+		jello.GetComponent<ImpulseSystem>().Init(visualWater.waterIntensityHeight, this, visualWater.width, visualWater.height);
 
         gameCamera = ((GameObject) Instantiate (cameraPrefab.gameObject)).GetComponent<GameCamera> ();
 		gameCamera.transform.SetParent (transform);
@@ -130,8 +129,12 @@ public class GameController : MonoBehaviour {
                     players[i].controller = this;
                     players[i].transform.SetParent(transform);
                     players[i].transform.position = new Vector3(visualWater.width / 2 * visualWater.waterTileSize.x + 3 * i, 0, visualWater.height / 2 * visualWater.waterTileSize.z);
-                    players[i].GetComponent<ImpulseSystem>().Init(visualWater.waterTileSize, visualWater.waterIntensityHeight, this, visualWater.width, visualWater.height);
+                    players[i].GetComponent<ImpulseSystem>().Init(visualWater.waterIntensityHeight, this, visualWater.width, visualWater.height);
                     players[i].playerId = i + 1;
+
+                    players[i].gameObject.name = "player" + (i + 1).ToString();
+                    players[i].transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = badges[i];
+
                     players[i].iFrames = 2;
                     respanTimers[i] = 0;
                 }
@@ -149,6 +152,11 @@ public class GameController : MonoBehaviour {
 	public Vector2 WorldPosToWaterPos(Vector3 wPos) {
 		return new Vector2 (wPos.x / visualWater.waterTileSize.x, wPos.z / visualWater.waterTileSize.z);
 	}
+
+    public Vector2 WaterPosToWorldPos(Vector2 wPos)
+    {
+        return new Vector2(wPos.x * visualWater.waterTileSize.x, wPos.y * visualWater.waterTileSize.z);
+    }
 
     public void waitRespawn(int id)
     {
