@@ -6,7 +6,6 @@ public class WaterCPU : MonoBehaviour {
 
     public float stepsPerSecond = 25;
     public float reboundReduction = .9f;
-    static private long TICKSINSECONDS = 10000000;
 
     int width, height;
     float poolmin = -25;
@@ -245,12 +244,16 @@ public class WaterCPU : MonoBehaviour {
 			float angle = Vector2.Angle (new Vector2 (0, 1), wave);
 			if (wave.x < 0)
 				angle = 360 - angle;
-			angle = Mathf.Floor (angle / 45 + 1);
+            angle = Mathf.Floor(angle / 45 + 1);
+            float angleIni = Mathf.Floor(angle);
+            //float power = 1 - (angle - angleIni);
 
-			WaveInfo wi = new WaveInfo ((int)position.x, (int)position.y, (int)angle, wave.magnitude);
-			lock (wavesToAdd) {
-				wavesToAdd.Add (wi);
-			}
+            WaveInfo wi1 = new WaveInfo((int)position.x, (int)position.y, (int)angleIni, wave.magnitude);// * power);
+            //WaveInfo wi2 = new WaveInfo ((int)position.x, (int)position.y, (int)((angleIni == 8) ? 1 : angleIni + 1), wave.magnitude *(1 - power));
+            lock (wavesToAdd) {
+				wavesToAdd.Add(wi1);
+                //wavesToAdd.Add(wi2);
+            }
 		}
     }
 

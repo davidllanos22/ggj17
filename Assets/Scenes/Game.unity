@@ -140,6 +140,11 @@ MonoBehaviour:
   jelloPrefab: {fileID: 114050839709061950, guid: a737cf6d26cd060428de73ba9f0d6e68,
     type: 2}
   wallPrefab: {fileID: 1677498444788532, guid: add7f5a885c646a4fb1bef91ceca3935, type: 2}
+  badges:
+  - {fileID: 21300000, guid: 2587aa0e2283a4a0ea4c2c8942893851, type: 3}
+  - {fileID: 21300000, guid: 33118da0bbc184e4aa538c4e98e94d89, type: 3}
+  - {fileID: 21300000, guid: fcdf1b80d28bb4e2895b74a020cfab5f, type: 3}
+  - {fileID: 21300000, guid: 8fc4f2c0bc496400694c0ec892f78dc5, type: 3}
   simulationFPSText: {fileID: 620461121}
 --- !u!1 &195114422
 GameObject:

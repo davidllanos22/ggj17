@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 136537233373654706}
   m_Layer: 0
   m_Name: JelloPivot
-  m_TagString: Untagged
+  m_TagString: Jello
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
