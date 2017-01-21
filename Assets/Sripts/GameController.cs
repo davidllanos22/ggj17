@@ -20,7 +20,6 @@ public class GameController : MonoBehaviour {
     int numPlayers = 4;
     PlayerScript[] players;
     int[] playerDeaths;
-    float[] respanTimers;
     JelloScript jello;
 
     public Vector3[,] waterDirAndHeight;
@@ -42,11 +41,11 @@ public class GameController : MonoBehaviour {
 
         players = new PlayerScript[numPlayers];
         playerDeaths = new int[numPlayers];
-        respanTimers = new float[numPlayers];
         for(int i = 0; i < numPlayers; ++i)
         {
             players[i] = ((GameObject)Instantiate(playerPrefab.gameObject)).GetComponent<PlayerScript>();
 			players[i].controller = this;
+            players[i].tileSize = visualWater.waterTileSize.x;
             players[i].transform.SetParent(transform);
             players[i].transform.position =  new Vector3(visualWater.width / 2 * visualWater.waterTileSize.x + 3*i, 0, visualWater.height / 2 * visualWater.waterTileSize.z);
 			players[i].GetComponent<ImpulseSystem>().Init(visualWater.waterIntensityHeight, this, visualWater.width, visualWater.height);
@@ -56,7 +55,6 @@ public class GameController : MonoBehaviour {
 			players[i].billboardRenderer.sprite = badges[i];
 
             playerDeaths[i] = 0;
-            respanTimers[i] = 0;
         }
 
         jello = ((GameObject)Instantiate(jelloPrefab.gameObject)).GetComponent<JelloScript>();
