@@ -7,12 +7,12 @@ public class PlayerScript : MonoBehaviour {
     float maxSpeed = 100f;
     float speed = 8000f;
     float waveHeight = 5f;
-    WaterCPU wCPU;
+
+	public GameController controller;
 
 	// Use this for initialization
 	void Start () {
         rb = GetComponent<Rigidbody>();
-        wCPU = GameObject.FindGameObjectWithTag("Water").GetComponent<WaterCPU>();
 	}
 	
 	// Update is called once per frame
@@ -22,9 +22,7 @@ public class PlayerScript : MonoBehaviour {
         if (Input.GetAxis("Fire1") > 0.1f || Input.GetKey(KeyCode.K))
         {
             if (rb.velocity.magnitude < maxSpeed) rb.AddForce(Time.deltaTime * charDir.normalized * speed);
-            wCPU.AddWave(transform.position, -new Vector2(charDir.x, charDir.z) * waveHeight);
+            controller.AddWave(transform.position, -new Vector2(charDir.x, charDir.z) * waveHeight);
         }
-
-
 	}
 }

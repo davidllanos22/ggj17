@@ -90,14 +90,15 @@ public class WaterCPU : MonoBehaviour {
         {0,1}
     };
 
+
     // Use this for initialization
     public void Init (int w, int h) {
         width = w; height = h;
         pool1 = new float[w,h,9];
         pool2 = new float[w, h, 9];
         waterMatrix = new Vector3[w, h];
-        wavesToAdd = new List<WaveInfo>();
-        reboundsToAdd = new List<WaveInfo>();
+        wavesToAdd = new List<WaveInfo>(1024);
+        reboundsToAdd = new List<WaveInfo>(1024);
 
         for (int i = 0; i < w; ++i)
         {
@@ -131,7 +132,9 @@ public class WaterCPU : MonoBehaviour {
             }
             Step();
             endTime = System.DateTime.Now.Ticks;
-            while (endTime - startTime < TICKSINSECONDS / tilesPerSecond) endTime = System.DateTime.Now.Ticks;
+			while (endTime - startTime < TICKSINSECONDS / tilesPerSecond) {
+				endTime = System.DateTime.Now.Ticks;
+			}
         }
     }
 	
@@ -164,7 +167,7 @@ public class WaterCPU : MonoBehaviour {
                     } else newPool[i, j, k] = 0;
 
                     //Rebound
-                    if (xCols[dirColisions[k, 0]] || yCols[dirColisions[k, 1]])
+					if (xCols[dirColisions[k, 0]] || yCols[dirColisions[k, 1]] && reboundsToAdd.Count < reboundsToAdd.Capacity)
                     {
                         WaveInfo wi;
                         if (!yCols[dirColisions[k, 1]]) wi = new WaveInfo(i, j, dirrebound[k, 0], oldPool[i, j, k] * reboundReduction); //xColision only
@@ -207,7 +210,7 @@ public class WaterCPU : MonoBehaviour {
             newPool[wi.i, wi.j, wi.k] += wi.power;
             newPool[wi.i, wi.j, 0] = Mathf.Clamp(newPool[wi.i, wi.j, 0] + oldPool[wi.i, wi.j, wi.k], poolmin, poolmax);
         }
-        reboundsToAdd.Clear();
+		reboundsToAdd.Clear();
 
         lock (waterMatrix) {
             for (int i = 0; i < width; ++i)
@@ -240,15 +243,17 @@ public class WaterCPU : MonoBehaviour {
 
     public void AddWave(Vector2 position, Vector2 wave)
     {
-        float angle = Vector2.Angle(new Vector2(0, 1), wave);
-        if (wave.x < 0) angle = 360 - angle;
-        angle = Mathf.Floor(angle / 45 + 1);
+		if (wavesToAdd.Count < wavesToAdd.Capacity) {
+			float angle = Vector2.Angle (new Vector2 (0, 1), wave);
+			if (wave.x < 0)
+				angle = 360 - angle;
+			angle = Mathf.Floor (angle / 45 + 1);
 
-        WaveInfo wi = new WaveInfo((int)position.x, (int)position.y, (int)angle, wave.magnitude);
-        lock (wavesToAdd)
-        {
-            wavesToAdd.Add(wi);
-        }
+			WaveInfo wi = new WaveInfo ((int)position.x, (int)position.y, (int)angle, wave.magnitude);
+			lock (wavesToAdd) {
+				wavesToAdd.Add (wi);
+			}
+		}
     }
 
 	// Matrix is w x h

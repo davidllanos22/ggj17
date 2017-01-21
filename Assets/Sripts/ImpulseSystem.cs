@@ -26,6 +26,8 @@ public class ImpulseSystem : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 
+		Vector2 waterPos = gc.WorldPosToWaterPos (transform.position);
+
         int xTilePos = (int)(transform.position.x * waterTileSize.x);
         int yTilePos = (int)(transform.position.z * waterTileSize.z);
 

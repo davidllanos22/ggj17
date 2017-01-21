@@ -37,6 +37,7 @@ public class GameController : MonoBehaviour {
         for(int i = 0; i < 1; ++i)
         {
             players[i] = ((GameObject)Instantiate(playerPrefab.gameObject)).GetComponent<PlayerScript>();
+			players [i].controller = this;
             players[i].transform.SetParent(transform);
             players[i].transform.position =  new Vector3(visualWater.width / 2 * visualWater.waterTileSize.x, 0, visualWater.height / 2 * visualWater.waterTileSize.z);
             players[i].GetComponent<ImpulseSystem>().Init(visualWater.waterTileSize, visualWater.waterIntensityHeight, this);
@@ -102,4 +103,15 @@ public class GameController : MonoBehaviour {
 			lastSimulationTime = currentTime;
 		}
     }
+
+	public void AddWave(Vector3 pos, Vector2 dir) {
+
+		Vector2 waterPos = WorldPosToWaterPos (pos);
+
+		waterCalculator.AddWave (waterPos, dir);
+	}
+
+	public Vector2 WorldPosToWaterPos(Vector3 wPos) {
+		return new Vector2 (wPos.x / visualWater.waterTileSize.x, wPos.z / visualWater.waterTileSize.z);
+	}
 }
