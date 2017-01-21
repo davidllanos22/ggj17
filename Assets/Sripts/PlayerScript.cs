@@ -14,7 +14,7 @@ public class PlayerScript : MonoBehaviour
     Rigidbody rb;
     float maxSpeed = 100f;
     float speed = 5000f;
-    float waveHeight = 5f;
+    float waveHeight = 10f;
     float attackMultiplyer = 5f;
     float potency = 0f;
     float chargeSpeed = 10f;
@@ -36,7 +36,7 @@ public class PlayerScript : MonoBehaviour
     bool stateI = true;
 
     float deadTimer = 3f;
-    float sinkingSpeed = .7f;
+    float sinkingSpeed = .6f;
     bool alive = true;
 
     Vector3 lookDir;
@@ -61,7 +61,7 @@ public class PlayerScript : MonoBehaviour
         if (alive)
         {
             Vector3 charDir = new Vector3(Input.GetAxis(inputs[inputType, 0] + playerId), 0, Input.GetAxis(inputs[inputType, 1] + playerId));
-            if (charDir.magnitude > 0.2f) lookDir = new Vector3(Mathf.Round(charDir.normalized.x), 0, Mathf.Round(charDir.normalized.z));
+            if (charDir.magnitude > 0.2f) lookDir = new Vector3(charDir.normalized.x, 0, charDir.normalized.z);
             if (timer > 0) timer -= Time.deltaTime;
             bool swimming = false;
             bool charging = false;
