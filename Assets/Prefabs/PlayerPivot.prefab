@@ -178,7 +178,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waterImpulse: 10
-  reboundStrength: 1.5
+  reboundStrength: 2
 --- !u!114 &114252279885501620
 MonoBehaviour:
   m_ObjectHideFlags: 1
