@@ -128,7 +128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c370a677b4cfe4041ab380399c923f99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waterImpulse: 5
+  waterImpulse: 10
 --- !u!136 &136537233373654706
 CapsuleCollider:
   m_ObjectHideFlags: 1

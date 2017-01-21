@@ -36,7 +36,7 @@ public class PlayerScript : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         anim = transform.GetChild(0).GetComponent<Animator>();
         rend = GetComponentInChildren<SpriteRenderer>();
-        lookDir = new Vector3();
+        lookDir = -Vector3.forward;
     }
 
     // Update is called once per frame

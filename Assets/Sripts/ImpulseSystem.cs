@@ -5,9 +5,12 @@ using UnityEngine;
 public class ImpulseSystem : MonoBehaviour {
 
     public float waterImpulse = 5;
+    public float reboundStrength = 1.5f;
     float waterIntensityHeight;
     GameController gc;
 	int width, height;
+
+    float idealYPos = 0;
 
     Rigidbody rig;
 
@@ -25,7 +28,7 @@ public class ImpulseSystem : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update () {
+    void FixedUpdate () {
 
 		Vector2 waterPos = gc.WorldPosToWaterPos (transform.position);
 
@@ -35,12 +38,23 @@ public class ImpulseSystem : MonoBehaviour {
         Vector2 worldPos = gc.WaterPosToWorldPos(new Vector2(xTilePos, yTilePos));
 
         Vector3 pos = transform.position;
-        if (waterPos.x < 0 || waterPos.x > width - 1) pos.x = worldPos.x;
-        if (waterPos.y < 0 || waterPos.y > height - 1) pos.y = worldPos.y;
+        Vector3 vel = rig.velocity;
+        if (waterPos.x < 0 || waterPos.x > width - 1)
+        {
+            vel.x *= -reboundStrength;
+            pos.x = worldPos.x;
+        }
+        if (waterPos.y < 0 || waterPos.y > height - 1)
+        {
+            vel.z *= -reboundStrength;
+            pos.z = worldPos.y;
+        }
+        
         Vector3 tileValue = gc.waterDirAndHeight[xTilePos, yTilePos];
-        pos.y = tileValue.z * waterIntensityHeight;
+        float idealYPos = tileValue.z * waterIntensityHeight;
+        pos.y = Mathf.Lerp(pos.y, idealYPos, .4f);
         transform.position = pos;
-
-        rig.AddForce(new Vector3(tileValue.x, 0, tileValue.y)* waterImpulse, ForceMode.Impulse);
+        rig.velocity = vel;
+        rig.AddForce(new Vector3(tileValue.x, 0, tileValue.y)* waterImpulse, ForceMode.Force);
     }
 }
