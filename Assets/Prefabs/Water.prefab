@@ -109,5 +109,5 @@ MonoBehaviour:
   waterTileSize: {x: 0.5, y: 0, z: 0.5}
   waterIntensityHeight: 1
   width: 64
-  height: 32
+  height: 24
   uvScale: 0.5

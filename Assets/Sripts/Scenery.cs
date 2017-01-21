@@ -12,6 +12,8 @@ public class Scenery : MonoBehaviour {
 	public GameObject floor;
 	public GameObject roomWall;
 	public GameObject stairPrefab;
+	public GameObject trampolinePrefab;
+	public GameObject referee;
 
 	// Use this for initialization
 	public void Init (Vector2 poolSize) {
@@ -69,9 +71,17 @@ public class Scenery : MonoBehaviour {
 		GameObject stairLeft = GameObject.Instantiate (stairPrefab, new Vector3(-0.25f + 1, worldHeight, -0.25f + poolSize.y - 0.1f), Quaternion.identity);
 		stairLeft.transform.parent = transform;
 
-
 		GameObject stairRight = GameObject.Instantiate (stairPrefab, new Vector3(-0.25f + poolSize.x - 2, worldHeight, -0.25f + poolSize.y - 0.1f), Quaternion.identity);
 		stairRight.transform.parent = transform;
+
+		GameObject trampolineLeft = GameObject.Instantiate (trampolinePrefab, new Vector3(-0.25f - 1, worldHeight, -0.25f + Mathf.FloorToInt(poolSize.y / 2)), Quaternion.identity);
+		trampolineLeft.transform.parent = transform;
+
+		GameObject trampolineRight = GameObject.Instantiate (trampolinePrefab, new Vector3(-0.25f + poolSize.x + 1, worldHeight, -0.25f + Mathf.FloorToInt(poolSize.y / 2) + 1), Quaternion.AngleAxis(180f, Vector3.up));
+		trampolineRight.transform.parent = transform;
+
+		GameObject refereeLeft = GameObject.Instantiate (referee, new Vector3(-0.25f + 3.5f, worldHeight, -0.25f + poolSize.y + 0.5f), Quaternion.identity);
+		refereeLeft.transform.parent = transform;
 	}
 	
 	// Update is called once per frame

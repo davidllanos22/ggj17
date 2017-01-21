@@ -58,3 +58,6 @@ MonoBehaviour:
   roomWall: {fileID: 1478094131118130, guid: 2dd42f186df6b40249d4cd9799c825c6, type: 2}
   stairPrefab: {fileID: 1479874643715054, guid: 1ce66db8b99634f5d9a474258738bffc,
     type: 2}
+  trampolinePrefab: {fileID: 1116204348059678, guid: 3456f0267ef6440eaaa2603974223f3d,
+    type: 2}
+  referee: {fileID: 1111825360771802, guid: 55068a90d709f4f6696295f3978b2ae1, type: 2}
