@@ -16,7 +16,7 @@ public class PlayerScript : MonoBehaviour {
     float stepWave = .05f;
 
 	public GameController controller;
-    int playerId = 1;
+    int playerId = 0;
 
     Animator anim;
 
@@ -29,7 +29,6 @@ public class PlayerScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         Vector3 charDir = new Vector3(Mathf.Round(Input.GetAxis("Horizontal"+playerId)), 0, Mathf.Round(Input.GetAxis("Vertical"+playerId))).normalized;
-
         if (timer > 0) timer -= Time.deltaTime;
 
         if (Input.GetAxis("A"+playerId) > 0.1f || Input.GetKey(KeyCode.K))
