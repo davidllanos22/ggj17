@@ -10,7 +10,7 @@ public class WaterCPU : MonoBehaviour {
     float[,,] pool1;
     float[,,] pool2;
 
-    float[,] waterMatrix;
+    Vector3[,] waterMatrix;
     bool usePool1 = true;
     bool running = true;
 
@@ -61,14 +61,14 @@ public class WaterCPU : MonoBehaviour {
         width = w; height = h;
         pool1 = new float[w,h,9];
         pool2 = new float[w, h, 9];
-        waterMatrix = new float[w, h];
+        waterMatrix = new Vector3[w, h];
         wavesToAdd = new List<WaveInfo>();
 
         for (int i = 0; i < w; ++i)
         {
             for (int j = 0; j < h; ++j)
             {
-                waterMatrix[i,j] = 0;
+                waterMatrix[i,j] = Vector3.zero;
                 for (int k = 0; k < 9; ++k)
                 {
                     pool1[i, j, k] = 0;
@@ -144,7 +144,14 @@ public class WaterCPU : MonoBehaviour {
             {
                 for (int j = 0; j < height; ++j)
                 {
-                    waterMatrix[i, j] = Mathf.Sin((newPool[i, j, 0] / poolmax) * Mathf.PI * .5f);
+
+                    Vector2 dirSum = Vector2.zero;
+                    for (int k = 1; k < 9; ++k)
+                    {
+                        Vector2 dir = new Vector2(dirvalues[k, 0], dirvalues[k, 1]);
+                        dirSum += dir.normalized*newPool[i, j, k];
+                    }
+                    waterMatrix[i, j] = new Vector3(dirSum.x,dirSum.y,Mathf.Sin((newPool[i, j, 0] / poolmax) * Mathf.PI * .5f));
                 }
             }
         }
@@ -173,7 +180,7 @@ public class WaterCPU : MonoBehaviour {
     }
 
 	// Matrix is w x h
-	public void RetrieveIntensities (ref float[,] matrix) {
+	public void RetrieveIntensities (ref Vector3[,] matrix) {
         lock(waterMatrix)
         {
             for (int i = 0; i < width; ++i)

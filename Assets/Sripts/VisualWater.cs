@@ -5,58 +5,38 @@ using UnityEngine;
 public class VisualWater : MonoBehaviour {
 
 	public WaterCPU waterCalculator;
-
-	public int width = 32;
-	public int height = 16;
-
 	public Vector3 waterTileSize;
-
-	public float[,] waterHeight;
-
 	public float waterIntensityHeight = 1f;
-
-	Mesh waterMesh;
+    public int width = 32;
+    public int height = 16;
+    GameController gc;
+    Mesh waterMesh;
 
 	// Use this for initialization
 	void Start () {
-
 		waterCalculator.Init (width, height);
-
-		waterHeight = new float[width, height];
-
-		CreateMesh ();
-
-		for (int i = 0; i < width; ++i) {
-			for (int j = 0; j < height; ++j) {
-
-				waterHeight [i, j] = 0f;
-			}
-		}
+		CreateMesh ();		
 	}
+
+    public void Init(GameController gameC)
+    {
+        gc = gameC;
+    }
 
 	// Update is called once per frame
 	void Update () {
-
-		if (Input.GetKeyDown (KeyCode.Space)) {
-
-			waterCalculator.Step ();
-
-			waterCalculator.RetrieveIntensities (ref waterHeight);
-
-
-			Vector3[] vertices = waterMesh.vertices;
-			int w = width + 2;
-			int h = height + 2;
-			for (int i = 1; i < w - 1; ++i) {
-				for (int j = 1; j < h - 1; ++j) {
-					Vector3 v = vertices [i + j * w];
-					v.y = waterHeight [i - 1, j - 1] * waterIntensityHeight;
-					vertices [i + j * w] = v;
-				}
+		Vector3[] vertices = waterMesh.vertices;
+		int w = width + 2;
+		int h = height + 2;
+		for (int i = 1; i < w - 1; ++i) {
+			for (int j = 1; j < h - 1; ++j) {
+				Vector3 v = vertices [i + j * w];
+				v.y = gc.waterDirAndHeight [i - 1, j - 1].z * waterIntensityHeight;
+				vertices [i + j * w] = v;
 			}
-			waterMesh.vertices = vertices;
-			waterMesh.RecalculateNormals ();
 		}
+		waterMesh.vertices = vertices;
+		waterMesh.RecalculateNormals ();
 	}
 
 	void CreateMesh() {

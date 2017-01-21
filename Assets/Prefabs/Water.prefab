@@ -104,7 +104,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waterCalculator: {fileID: 114174371241731956}
-  width: 32
-  height: 64
   waterTileSize: {x: 1, y: 0, z: 1}
   waterIntensityHeight: 4
+  width: 16
+  height: 32
