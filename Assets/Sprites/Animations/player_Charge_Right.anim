@@ -5,7 +5,7 @@ AnimationClip:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: player_Idle_Left
+  m_Name: player_Charge_Right
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -19,28 +19,18 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 21300018, guid: 7bf6717fcbe1943d8b3dc0bfb3034fc2, type: 3}
-    - time: 0.2
-      value: {fileID: 21300020, guid: 7bf6717fcbe1943d8b3dc0bfb3034fc2, type: 3}
-    - time: 0.4
-      value: {fileID: 21300022, guid: 7bf6717fcbe1943d8b3dc0bfb3034fc2, type: 3}
-    - time: 0.6
-      value: {fileID: 21300024, guid: 7bf6717fcbe1943d8b3dc0bfb3034fc2, type: 3}
-    - time: 0.8
-      value: {fileID: 21300026, guid: 7bf6717fcbe1943d8b3dc0bfb3034fc2, type: 3}
-    - time: 1
       value: {fileID: 21300028, guid: 7bf6717fcbe1943d8b3dc0bfb3034fc2, type: 3}
-    - time: 1.2
+    - time: 0.2
       value: {fileID: 21300030, guid: 7bf6717fcbe1943d8b3dc0bfb3034fc2, type: 3}
-    - time: 1.4000001
+    - time: 0.4
       value: {fileID: 21300032, guid: 7bf6717fcbe1943d8b3dc0bfb3034fc2, type: 3}
-    - time: 1.6000001
+    - time: 0.6
       value: {fileID: 21300034, guid: 7bf6717fcbe1943d8b3dc0bfb3034fc2, type: 3}
-    - time: 1.8000002
+    - time: 0.8
       value: {fileID: 21300036, guid: 7bf6717fcbe1943d8b3dc0bfb3034fc2, type: 3}
-    - time: 2.0000002
+    - time: 1
       value: {fileID: 21300038, guid: 7bf6717fcbe1943d8b3dc0bfb3034fc2, type: 3}
-    - time: 2.1833336
+    - time: 1.1833334
       value: {fileID: 21300038, guid: 7bf6717fcbe1943d8b3dc0bfb3034fc2, type: 3}
     attribute: m_Sprite
     path: 
@@ -60,11 +50,6 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: 21300018, guid: 7bf6717fcbe1943d8b3dc0bfb3034fc2, type: 3}
-    - {fileID: 21300020, guid: 7bf6717fcbe1943d8b3dc0bfb3034fc2, type: 3}
-    - {fileID: 21300022, guid: 7bf6717fcbe1943d8b3dc0bfb3034fc2, type: 3}
-    - {fileID: 21300024, guid: 7bf6717fcbe1943d8b3dc0bfb3034fc2, type: 3}
-    - {fileID: 21300026, guid: 7bf6717fcbe1943d8b3dc0bfb3034fc2, type: 3}
     - {fileID: 21300028, guid: 7bf6717fcbe1943d8b3dc0bfb3034fc2, type: 3}
     - {fileID: 21300030, guid: 7bf6717fcbe1943d8b3dc0bfb3034fc2, type: 3}
     - {fileID: 21300032, guid: 7bf6717fcbe1943d8b3dc0bfb3034fc2, type: 3}
@@ -77,7 +62,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 2.2000003
+    m_StopTime: 1.2
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
