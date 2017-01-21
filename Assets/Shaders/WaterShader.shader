@@ -10,11 +10,14 @@
 	SubShader
 	{
 		Tags {
-			"RenderType"="Opaque"
+			"RenderType"="Transparent"
+			"Queue"="Transparent+10"
+			"IgnoreProjector"="True" 
 		}
 		LOD 100
 
 		ZWrite Off
+		Blend SrcAlpha OneMinusSrcAlpha, One One
 
 		Pass
 		{
@@ -61,12 +64,14 @@
 				fixed4 col = tex2D(_MainTex, i.uv);
 				fixed delay = tex2D(_DelayTex, i.uv).r;
 				float h = i.h + 1;
-				h = floor(h * 10)/10;
+				h = floor(h * 8)/8;
 
-				if (delay < abs(i.h)) {
+				if (delay < abs(i.h) * 2) {
 					col = tex2D(_DetailTex, i.uv);
 				}
 				col.rgb *= h;
+				col.a = 0.5f + 0.5*abs(i.h);
+
 				// apply fog
 				UNITY_APPLY_FOG(i.fogCoord, col);
 				return col;
