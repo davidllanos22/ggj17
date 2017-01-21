@@ -11,7 +11,7 @@ public class WaterCPU : MonoBehaviour {
     int width, height;
     float poolmin = -10;
     float poolmax = 50;
-    float threshold = .005f;
+    float threshold = .003f;
     float[,,] pool1;
     float[,,] pool2;
 
