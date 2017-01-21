@@ -62,7 +62,7 @@ public class GameCamera : MonoBehaviour {
 
 		float distance = 0f;
 		float distanceX = delta.x / (2 * Mathf.Tan(wFOV * Mathf.Deg2Rad)) * Mathf.Sqrt(r);
-		float distanceY = delta.y / (2 * Mathf.Tan(Camera.main.fieldOfView * Mathf.Deg2Rad)) * 2 * r;
+		float distanceY = delta.y / (2 * Mathf.Tan(Camera.main.fieldOfView * Mathf.Deg2Rad)) * 4 * r;
 
         distance = (distanceX * r + distanceY) / (1 + r);
 
@@ -72,11 +72,14 @@ public class GameCamera : MonoBehaviour {
 
 
         // Mou camera
-        Vector3 target = middle - new Vector3(0, delta.y / 5f, 0);
+        Vector3 target;
+        if (r > 3) target = middle + r * new Vector3(0, delta.y / 4f, 0);
+        else target = middle - new Vector3(0, delta.y / 4f, 0);
 
-		transform.position = middlePos + deltaPos;
+        transform.position = middlePos + deltaPos;
         transform.LookAt(middlePos);
 		//transform.rotation = Quaternion.AngleAxis (-cameraAngle, Vector3.left);
+        //TODO REBRE NOUS PLAYERS
 	}
 
 	void OnDrawGizmos() {
