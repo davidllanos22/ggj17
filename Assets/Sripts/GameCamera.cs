@@ -21,7 +21,6 @@ public class GameCamera : MonoBehaviour {
 	float wFOV;
 
 	public void Init(GameObject[] players, Vector2 gameWidth) {
-
 		this.players = players;
 		this.gameWidth = gameWidth;
 		ratio = (float)Screen.width / (float)Screen.height;
@@ -30,7 +29,6 @@ public class GameCamera : MonoBehaviour {
 
 	// Use this for initialization
 	void Update () {
-
 		Vector2 min = new Vector2 (Mathf.Infinity, Mathf.Infinity);
 		Vector2 max = new Vector2 (Mathf.NegativeInfinity, Mathf.NegativeInfinity);
 
@@ -61,22 +59,24 @@ public class GameCamera : MonoBehaviour {
 		float hFov = Camera.main.fieldOfView / 2f;
 		float beta = 180 - cameraAngle - hFov;
 
-		float distance = 0f;
-		if (r > 1) { // Wrong
-			distance = (Mathf.Sin(beta * Mathf.Deg2Rad)/Mathf.Sin(hFov * Mathf.Deg2Rad)) * delta.y/2f;
-		} else {
-			distance = (delta.x / 2f) / Mathf.Tan (wFOV/2f * Mathf.Deg2Rad);
-		}
 
+		float distance = 0f;
+		float distanceX = delta.x / (2 * Mathf.Tan(wFOV * Mathf.Deg2Rad)) * Mathf.Sqrt(r);
+		float distanceY = delta.y / (2 * Mathf.Tan(Camera.main.fieldOfView * Mathf.Deg2Rad)) * 2 * r;
+
+        distance = (distanceX * r + distanceY) / (1 + r);
+
+        deltaPos.x = 0;
 		deltaPos.y = Mathf.Sin(cameraAngle * Mathf.Deg2Rad) * distance;
 		deltaPos.z = -Mathf.Cos(cameraAngle * Mathf.Deg2Rad) * distance;
 
 
-		// Mou camera
+        // Mou camera
+        Vector3 target = middle - new Vector3(0, delta.y / 5f, 0);
 
-		transform.position = middle + deltaPos;
-
-		transform.rotation = Quaternion.AngleAxis (-cameraAngle, Vector3.left);
+		transform.position = middlePos + deltaPos;
+        transform.LookAt(middlePos);
+		//transform.rotation = Quaternion.AngleAxis (-cameraAngle, Vector3.left);
 	}
 
 	void OnDrawGizmos() {
