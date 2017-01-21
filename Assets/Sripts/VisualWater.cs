@@ -24,8 +24,8 @@ public class VisualWater : MonoBehaviour {
         gc = gameC;
     }
 
-	// Update is called once per frame
-	void Update () {
+
+	public void UpdateMesh () {
 		Vector3[] vertices = waterMesh.vertices;
 		int w = width + 2;
 		int h = height + 2;

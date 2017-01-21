@@ -101,6 +101,7 @@ public class GameController : MonoBehaviour {
 			waterCalculator.RetrieveIntensities (ref waterDirAndHeight);
 
 			lastSimulationTime = currentTime;
+			visualWater.UpdateMesh ();
 		}
     }
 
