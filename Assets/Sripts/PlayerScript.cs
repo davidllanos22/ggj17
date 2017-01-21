@@ -86,7 +86,7 @@ public class PlayerScript : MonoBehaviour
             if (Input.GetButtonUp(inputs[inputType, 3] + playerId))
             {
                 controller.AddWave(transform.position + lookDir * (.3f + ((lookDir.z < 0) ? 0 : .3f)) * tileSize, new Vector2(lookDir.x, lookDir.z) * waveHeight * potency * attackMultiplyer);
-                rb.AddForce(Time.deltaTime * -lookDir * 2 * speed * potency);
+                rb.AddForce(Time.deltaTime * -lookDir * 4f * speed * potency);
                 potency = 0;
             }
 
@@ -114,13 +114,12 @@ public class PlayerScript : MonoBehaviour
         }
         else
         {
-            imp.enabled = false;
             transform.position -= sinkingSpeed * Time.deltaTime * Vector3.up;
             deadTimer -= Time.deltaTime;
             if (deadTimer <= 0)
             {
                 //transform.position = new Vector3(transform.position.x, 0, transform.position.z);
-                imp.enabled = true;
+                imp.SetAlive(true);
                 alive = true;
                 iFrames = 2f;
                 anim.SetBool("Alive", alive);
@@ -157,6 +156,8 @@ public class PlayerScript : MonoBehaviour
             alive = false;
             anim.SetBool("Alive", alive);
             lookDir = -Vector3.forward;
+            imp.SetAlive(false);
+
         }
     }
 }

@@ -177,7 +177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c370a677b4cfe4041ab380399c923f99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waterImpulse: 10
+  waterImpulse: 15
   reboundStrength: 1
 --- !u!114 &114252279885501620
 MonoBehaviour:
