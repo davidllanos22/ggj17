@@ -11,7 +11,6 @@ public class WaterCPU : MonoBehaviour {
     int width, height;
     float poolmin = -10;
     float poolmax = 50;
-    float threshold = .005f;
     float[,,] pool1;
     float[,,] pool2;
 
@@ -183,9 +182,6 @@ public class WaterCPU : MonoBehaviour {
             {
                 for (int k = 1; k < 9; ++k)
                 {
-                    //Kill waves too low
-                    if (oldPool[i, j, k] < threshold) continue;
-
                     for (int t = 0; t < 5; ++t)
                     {
                         int tt = dirspawns[k,t];
