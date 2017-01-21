@@ -13,7 +13,11 @@ public class GameController : MonoBehaviour {
     GameCamera gameCamera;
 	VisualWater visualWater;
     WaterCPU waterCalculator;
+
+    int numPlayers = 4;
     PlayerScript[] players;
+    int[] playerDeaths;
+    float[] respanTimers;
     JelloScript jello;
 
     public Vector3[,] waterDirAndHeight;
@@ -33,14 +37,19 @@ public class GameController : MonoBehaviour {
 
         GenerateWalls();
 
-        players = new PlayerScript[1];
-        for(int i = 0; i < 1; ++i)
+        players = new PlayerScript[numPlayers];
+        playerDeaths = new int[numPlayers];
+        respanTimers = new float[numPlayers];
+        for(int i = 0; i < numPlayers; ++i)
         {
             players[i] = ((GameObject)Instantiate(playerPrefab.gameObject)).GetComponent<PlayerScript>();
-			players [i].controller = this;
+			players[i].controller = this;
             players[i].transform.SetParent(transform);
-            players[i].transform.position =  new Vector3(visualWater.width / 2 * visualWater.waterTileSize.x, 0, visualWater.height / 2 * visualWater.waterTileSize.z);
+            players[i].transform.position =  new Vector3(visualWater.width / 2 * visualWater.waterTileSize.x + 3*i, 0, visualWater.height / 2 * visualWater.waterTileSize.z);
 			players[i].GetComponent<ImpulseSystem>().Init(visualWater.waterTileSize, visualWater.waterIntensityHeight, this, visualWater.width, visualWater.height);
+            players[i].playerId = i + 1;
+            playerDeaths[i] = 0;
+            respanTimers[i] = 0;
         }
 
         jello = ((GameObject)Instantiate(jelloPrefab.gameObject)).GetComponent<JelloScript>();
@@ -103,6 +112,25 @@ public class GameController : MonoBehaviour {
 			lastSimulationTime = currentTime;
 			visualWater.UpdateMesh ();
 		}
+
+        for (int i = 0; i < numPlayers; i++)
+        {
+            if (respanTimers[i] > 0)
+            {
+                respanTimers[i] -= Time.deltaTime;
+                if (respanTimers[i] <= 0)
+                {
+                    players[i] = ((GameObject)Instantiate(playerPrefab.gameObject)).GetComponent<PlayerScript>();
+                    players[i].controller = this;
+                    players[i].transform.SetParent(transform);
+                    players[i].transform.position = new Vector3(visualWater.width / 2 * visualWater.waterTileSize.x + 3 * i, 0, visualWater.height / 2 * visualWater.waterTileSize.z);
+                    players[i].GetComponent<ImpulseSystem>().Init(visualWater.waterTileSize, visualWater.waterIntensityHeight, this, visualWater.width, visualWater.height);
+                    players[i].playerId = i + 1;
+                    players[i].iFrames = 2;
+                    respanTimers[i] = 0;
+                }
+            }
+        }
     }
 
 	public void AddWave(Vector3 pos, Vector2 dir) {
@@ -115,4 +143,10 @@ public class GameController : MonoBehaviour {
 	public Vector2 WorldPosToWaterPos(Vector3 wPos) {
 		return new Vector2 (wPos.x / visualWater.waterTileSize.x, wPos.z / visualWater.waterTileSize.z);
 	}
+
+    public void waitRespawn(int id)
+    {
+        playerDeaths[id-1]++;
+        respanTimers[id-1] = 3;
+    }
 }

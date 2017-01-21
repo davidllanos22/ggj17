@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerScript : MonoBehaviour {
+public class PlayerScript : MonoBehaviour
+{
     Rigidbody rb;
     float maxSpeed = 100f;
     float speed = 5000f;
@@ -15,36 +16,40 @@ public class PlayerScript : MonoBehaviour {
     float timer = 0f;
     float stepWave = .05f;
 
-	public GameController controller;
-    int playerId = 1;
+    public GameController controller;
+    public int playerId = 1;
+
+    public float iFrames = 1f;
 
     Animator anim;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         rb = GetComponent<Rigidbody>();
         anim = transform.GetChild(0).GetComponent<Animator>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        Vector3 charDir = new Vector3(Mathf.Round(Input.GetAxis("Horizontal"+playerId)), 0, Mathf.Round(Input.GetAxis("Vertical"+playerId))).normalized;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        Vector3 charDir = new Vector3(Mathf.Round(Input.GetAxis("Horizontal" + playerId)), 0, Mathf.Round(Input.GetAxis("Vertical" + playerId))).normalized;
         if (timer > 0) timer -= Time.deltaTime;
         bool swimming = false;
         bool charging = false;
-        if (Input.GetButton("A"+playerId) || Input.GetKey(KeyCode.K))
+        if (Input.GetButton("A" + playerId) || Input.GetKey(KeyCode.K))
         {
             if (rb.velocity.magnitude < maxSpeed) rb.AddForce(Time.deltaTime * charDir * speed);
             if (timer <= 0)
             {
-                controller.AddWave(transform.position - charDir*0.5f, -new Vector2(charDir.x, charDir.z) * waveHeight);
+                controller.AddWave(transform.position - charDir * 0.5f, -new Vector2(charDir.x, charDir.z) * waveHeight);
                 timer = stepWave;
             }
 
             swimming = true;
-        }        
+        }
 
-        if (Input.GetButton("X"+playerId))
+        if (Input.GetButton("X" + playerId))
         {
             potency = Mathf.Min(potency + Time.deltaTime * chargeSpeed, maxPotency);
             charging = true;
@@ -59,6 +64,7 @@ public class PlayerScript : MonoBehaviour {
 
         SetAnimations(charDir.x, charDir.z, swimming, charging);
 
+        if (iFrames > 0) iFrames -= Time.deltaTime;
     }
 
     void SetAnimations(float xAxis, float yAxis, bool swimming, bool charging)
@@ -69,9 +75,9 @@ public class PlayerScript : MonoBehaviour {
         bool left = false;
 
         up = (yAxis >= 0.15f);
-		down = (yAxis <= -0.15f);
-		left = (xAxis <= -0.15f);
-		right = (xAxis >= 0.15f);
+        down = (yAxis <= -0.15f);
+        left = (xAxis <= -0.15f);
+        right = (xAxis >= 0.15f);
 
         anim.SetBool("Up", up);
         anim.SetBool("Down", down);
@@ -79,5 +85,14 @@ public class PlayerScript : MonoBehaviour {
         anim.SetBool("Right", right);
         anim.SetBool("Swimming", swimming);
         anim.SetBool("Charging", charging);
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.tag == "Jello" && iFrames <= 0)
+        {
+            controller.waitRespawn(playerId);
+            Destroy(gameObject);
+        }
     }
 }
