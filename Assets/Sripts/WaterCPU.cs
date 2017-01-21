@@ -5,7 +5,7 @@ using UnityEngine;
 public class WaterCPU : MonoBehaviour {
 
     public float stepsPerSecond = 25;
-    public float reboundReduction = .9f;
+    public float reboundReduction = .95f;
 
     int width, height;
     float poolmin = -25;

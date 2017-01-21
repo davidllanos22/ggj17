@@ -40,6 +40,7 @@ GameObject:
   - component: {fileID: 4438678301963086}
   - component: {fileID: 212631875189217884}
   - component: {fileID: 95749727755954638}
+  - component: {fileID: 114680282559006536}
   m_Layer: 0
   m_Name: JellyfishRenderer
   m_TagString: Untagged
