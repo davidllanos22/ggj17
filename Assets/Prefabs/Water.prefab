@@ -21,6 +21,8 @@ GameObject:
   - component: {fileID: 4998014509469356}
   - component: {fileID: 114535677530686196}
   - component: {fileID: 114174371241731956}
+  - component: {fileID: 23477518437668082}
+  - component: {fileID: 33042136736211454}
   m_Layer: 0
   m_Name: Water
   m_TagString: Untagged
@@ -41,6 +43,44 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &23477518437668082
+MeshRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1107778448137424}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_Materials:
+  - {fileID: 2100000, guid: de2aa0fb3db5d4d5db31c17ba2791ae1, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!33 &33042136736211454
+MeshFilter:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1107778448137424}
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!114 &114174371241731956
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -63,10 +103,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e49e1067f09d243b5be2430f240284e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waterCubePrefab: {fileID: 1625903519899032, guid: 580f28b2e1ce44affa91c55e5c30af2c,
-    type: 2}
   waterCalculator: {fileID: 114174371241731956}
   width: 32
-  height: 16
-  waterCubeSize: {x: 1, y: 2, z: 1}
-  waterIntensityHeight: 1
+  height: 64
+  waterTileSize: {x: 1, y: 0, z: 1}
+  waterIntensityHeight: 4
