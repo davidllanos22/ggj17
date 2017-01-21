@@ -40,6 +40,7 @@ GameObject:
   - component: {fileID: 4438678301963086}
   - component: {fileID: 212631875189217884}
   - component: {fileID: 95749727755954638}
+  - component: {fileID: 114680282559006536}
   m_Layer: 0
   m_Name: JellyfishRenderer
   m_TagString: Untagged
@@ -129,6 +130,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waterImpulse: 5
+--- !u!114 &114680282559006536
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1633148577465814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 621b9ff379723413b862b41338cc4de5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!136 &136537233373654706
 CapsuleCollider:
   m_ObjectHideFlags: 1

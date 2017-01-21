@@ -10,6 +10,8 @@ public class GameController : MonoBehaviour {
     public JelloScript jelloPrefab;
     public GameObject wallPrefab;
 
+	public float wallHeight = 3f;
+
     GameCamera gameCamera;
 	VisualWater visualWater;
     WaterCPU waterCalculator;
@@ -49,6 +51,14 @@ public class GameController : MonoBehaviour {
 		jello.GetComponent<ImpulseSystem>().Init(visualWater.waterTileSize, visualWater.waterIntensityHeight, this, visualWater.width, visualWater.height);
 
         gameCamera = ((GameObject) Instantiate (cameraPrefab.gameObject)).GetComponent<GameCamera> ();
+
+		GameObject[] cameraFollowing = new GameObject[players.Length + 1];
+		for (int i = 0; i < players.Length; ++i) {
+			cameraFollowing [i] = players [i].gameObject;
+		}
+		cameraFollowing [cameraFollowing.Length - 1] = jello.gameObject;
+
+		gameCamera.Init (cameraFollowing, new Vector2(visualWater.width * visualWater.waterTileSize.x, visualWater.height * visualWater.waterTileSize.z));
 		gameCamera.transform.SetParent (transform);
 		gameCamera.transform.position = transform.position + new Vector3 (visualWater.width / 2 * visualWater.waterTileSize.x, 0, visualWater.height / 2 * visualWater.waterTileSize.z);
 	}
