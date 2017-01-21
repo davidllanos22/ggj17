@@ -65,7 +65,7 @@ public class PlayerScript : MonoBehaviour
             if (timer > 0) timer -= Time.deltaTime;
             bool swimming = false;
             bool charging = false;
-            if (Input.GetAxis(inputs[inputType, 2] + playerId) > .1f || Input.GetKey(KeyCode.K))
+            if (Input.GetAxis(inputs[inputType, 2] + playerId) > .1f)
             {
                 if (rb.velocity.magnitude < maxSpeed) rb.AddForce(Time.deltaTime * lookDir * speed);
                 if (timer <= 0)
@@ -123,6 +123,7 @@ public class PlayerScript : MonoBehaviour
                 imp.enabled = true;
                 alive = true;
                 iFrames = 2f;
+                anim.SetBool("Alive", alive);
             }
         }
     }
@@ -154,6 +155,8 @@ public class PlayerScript : MonoBehaviour
             controller.waitRespawn(playerId);
             deadTimer = 3f;
             alive = false;
+            anim.SetBool("Alive", alive);
+            lookDir = -Vector3.forward;
         }
     }
 }
