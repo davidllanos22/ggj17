@@ -9,6 +9,7 @@ public class GameController : MonoBehaviour {
     public PlayerScript playerPrefab;
     public JelloScript jelloPrefab;
     public GameObject wallPrefab;
+    public List<Sprite> badges;
 
     GameCamera gameCamera;
 	VisualWater visualWater;
@@ -40,6 +41,7 @@ public class GameController : MonoBehaviour {
         players = new PlayerScript[numPlayers];
         playerDeaths = new int[numPlayers];
         respanTimers = new float[numPlayers];
+        GameObject badge;
         for(int i = 0; i < numPlayers; ++i)
         {
             players[i] = ((GameObject)Instantiate(playerPrefab.gameObject)).GetComponent<PlayerScript>();
@@ -48,6 +50,10 @@ public class GameController : MonoBehaviour {
             players[i].transform.position =  new Vector3(visualWater.width / 2 * visualWater.waterTileSize.x + 3*i, 0, visualWater.height / 2 * visualWater.waterTileSize.z);
 			players[i].GetComponent<ImpulseSystem>().Init(visualWater.waterTileSize, visualWater.waterIntensityHeight, this, visualWater.width, visualWater.height);
             players[i].playerId = i + 1;
+            players[i].gameObject.name = "player" + (i+1).ToString();
+
+            players[i].transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = badges[i];
+
             playerDeaths[i] = 0;
             respanTimers[i] = 0;
         }

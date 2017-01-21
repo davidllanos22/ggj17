@@ -20,6 +20,11 @@ public class PlayerScript : MonoBehaviour
     public int playerId = 1;
 
     public float iFrames = 1f;
+    float blinkRate = .08f;
+    float blinkTimer = 0;
+
+    SpriteRenderer rend;
+    bool stateI = true;
 
     Animator anim;
 
@@ -28,6 +33,7 @@ public class PlayerScript : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         anim = transform.GetChild(0).GetComponent<Animator>();
+        rend = GetComponentInChildren<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -64,7 +70,25 @@ public class PlayerScript : MonoBehaviour
 
         SetAnimations(charDir.x, charDir.z, swimming, charging);
 
-        if (iFrames > 0) iFrames -= Time.deltaTime;
+        if (iFrames > 0)
+        {
+            blinkTimer += Time.deltaTime;
+            if (blinkTimer >= blinkRate)
+            { 
+                if (stateI) rend.color = Color.gray;
+                else rend.color = Color.white;
+
+                stateI = !stateI;
+                blinkTimer = 0;
+            }
+
+            iFrames -= Time.deltaTime;
+            if (iFrames < 0)
+            {
+                rend.color = Color.white;
+                iFrames = 0;
+            }
+        }
     }
 
     void SetAnimations(float xAxis, float yAxis, bool swimming, bool charging)
