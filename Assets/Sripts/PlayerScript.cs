@@ -22,6 +22,7 @@ public class PlayerScript : MonoBehaviour
 
     float timer = 0f;
     float stepWave = .05f;
+    public float tileSize;
 
     public GameController controller;
     public int playerId = 1;
@@ -36,9 +37,11 @@ public class PlayerScript : MonoBehaviour
 
     float deadTimer = 3f;
     float sinkingSpeed = .7f;
-    bool alive = false;
+    bool alive = true;
 
     Vector3 lookDir;
+
+    ImpulseSystem imp;
 
     public Animator anim;
 	public SpriteRenderer billboardRenderer;
@@ -49,6 +52,7 @@ public class PlayerScript : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rend = GetComponentInChildren<SpriteRenderer>();
         lookDir = -Vector3.forward;
+        imp = GetComponent<ImpulseSystem>();
     }
 
     // Update is called once per frame
@@ -66,7 +70,7 @@ public class PlayerScript : MonoBehaviour
                 if (rb.velocity.magnitude < maxSpeed) rb.AddForce(Time.deltaTime * lookDir * speed);
                 if (timer <= 0)
                 {
-                    controller.AddWave(transform.position - lookDir * 0.5f, -new Vector2(lookDir.x, lookDir.z) * waveHeight);
+                    controller.AddWave(transform.position - lookDir * .1f * tileSize, -new Vector2(lookDir.x, lookDir.z) * waveHeight);
                     timer = stepWave;
                 }
 
@@ -81,7 +85,7 @@ public class PlayerScript : MonoBehaviour
 
             if (Input.GetButtonUp(inputs[inputType, 3] + playerId))
             {
-                controller.AddWave(transform.position + lookDir, new Vector2(lookDir.x, lookDir.z) * waveHeight * potency * attackMultiplyer);
+                controller.AddWave(transform.position + lookDir * .1f * tileSize, new Vector2(lookDir.x, lookDir.z) * waveHeight * potency * attackMultiplyer);
                 rb.AddForce(Time.deltaTime * -lookDir * 2 * speed * potency);
                 potency = 0;
             }
@@ -110,12 +114,15 @@ public class PlayerScript : MonoBehaviour
         }
         else
         {
+            imp.enabled = false;
             transform.position -= sinkingSpeed * Time.deltaTime * Vector3.up;
             deadTimer -= Time.deltaTime;
             if (deadTimer <= 0)
             {
-                transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+                //transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+                imp.enabled = true;
                 alive = true;
+                iFrames = 2f;
             }
         }
     }
@@ -140,7 +147,7 @@ public class PlayerScript : MonoBehaviour
         anim.SetBool("Charging", charging);
     }
 
-    void OnCollisionEnter(Collision collision)
+    void OnCollisionStay(Collision collision)
     {
         if (collision.collider.tag == "Jello" && iFrames <= 0 && alive)
         {
