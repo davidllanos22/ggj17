@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dfe383236642423b8c579bdd64334a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  worldHeight: 1
+  worldHeight: 0.75
   backFloorWidth: 2
   poolWall: {fileID: 1154462956094698, guid: 59a3b1d91569847c7aa1ad22a1d67886, type: 2}
   floor: {fileID: 1566733957307496, guid: 6ca930d2a221d4f978d4cc001f5ce889, type: 2}

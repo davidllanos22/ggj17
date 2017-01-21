@@ -19,23 +19,23 @@ public class Scenery : MonoBehaviour {
 		GameObject leftWall = GameObject.Instantiate (poolWall, new Vector3(-0.25f, worldHeight,-0.25f), Quaternion.AngleAxis(-90, Vector3.up));
 		leftWall.transform.parent = transform;
 		leftWall.transform.localScale = new Vector3 (poolSize.y, 1f, 1f);
-		leftWall.GetComponentInChildren<MeshRenderer> ().material.mainTextureScale = new Vector2 (poolSize.y / 2f, 1f);
+		leftWall.GetComponentInChildren<MeshRenderer> ().material.mainTextureScale = new Vector2 (poolSize.y, 1f);
 
 		GameObject frontWall = GameObject.Instantiate (poolWall, new Vector3(-0.25f, worldHeight,-0.25f + poolSize.y), Quaternion.identity);
 		frontWall.transform.parent = transform;
 		frontWall.transform.localScale = new Vector3 (poolSize.x, 1f, 1f);
-		frontWall.GetComponentInChildren<MeshRenderer> ().material.mainTextureScale = new Vector2 (poolSize.x / 2f, 1f);
+		frontWall.GetComponentInChildren<MeshRenderer> ().material.mainTextureScale = new Vector2 (poolSize.x, 1f);
 
 		GameObject rightWall = GameObject.Instantiate (poolWall, new Vector3(-0.25f + poolSize.x, worldHeight, poolSize.y -0.25f), Quaternion.AngleAxis(90, Vector3.up));
 		rightWall.transform.parent = transform;
 		rightWall.transform.localScale = new Vector3 (poolSize.y, 1f, 1f);
-		rightWall.GetComponentInChildren<MeshRenderer> ().material.mainTextureScale = new Vector2 (poolSize.y / 2f, 1f);
+		rightWall.GetComponentInChildren<MeshRenderer> ().material.mainTextureScale = new Vector2 (poolSize.y, 1f);
 
 		// Floors
-		GameObject poolFloor = GameObject.Instantiate (floor, new Vector3(-0.25f, worldHeight - 6f, -0.25f), Quaternion.identity);
+		GameObject poolFloor = GameObject.Instantiate (floor, new Vector3(-0.25f, worldHeight - 3f, -0.25f), Quaternion.identity);
 		poolFloor.transform.parent = transform;
 		poolFloor.transform.localScale = new Vector3 (poolSize.x, 1f, poolSize.y);
-		poolFloor.GetComponentInChildren<MeshRenderer> ().material.mainTextureScale = new Vector2 (poolFloor.transform.localScale.x, poolFloor.transform.localScale.z);
+		poolFloor.GetComponentInChildren<MeshRenderer> ().material.mainTextureScale = new Vector2 (poolFloor.transform.localScale.x, poolFloor.transform.localScale.z)*2f;
 
 		float floorWidth = 20f;
 		GameObject leftFloor = GameObject.Instantiate (floor, new Vector3(-0.25f - floorWidth, worldHeight,-0.25f - floorWidth), Quaternion.identity);
