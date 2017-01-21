@@ -139,6 +139,7 @@ MonoBehaviour:
     type: 2}
   jelloPrefab: {fileID: 114050839709061950, guid: a737cf6d26cd060428de73ba9f0d6e68,
     type: 2}
+  wallPrefab: {fileID: 1677498444788532, guid: add7f5a885c646a4fb1bef91ceca3935, type: 2}
 --- !u!1 &195114422
 GameObject:
   m_ObjectHideFlags: 0

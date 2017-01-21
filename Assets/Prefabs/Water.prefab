@@ -92,6 +92,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a3ba04cda1ca4484abd87514c35b585, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tilesPerSecond: 25
+  reboundReduction: 0.9
 --- !u!114 &114535677530686196
 MonoBehaviour:
   m_ObjectHideFlags: 1

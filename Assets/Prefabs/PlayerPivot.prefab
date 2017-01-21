@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 114172085594557696}
   - component: {fileID: 54295423427453842}
   - component: {fileID: 114881089433600022}
+  - component: {fileID: 136751229290885940}
   m_Layer: 0
   m_Name: PlayerPivot
   m_TagString: Untagged
@@ -128,6 +129,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3045979362f2f44c94d12f0b4cd9806, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!136 &136751229290885940
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1925065654016660}
+  m_Material: {fileID: 13400000, guid: c60c860d601658548b6c2861ae5bd22a, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.125
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!212 &212561181399653690
 SpriteRenderer:
   m_ObjectHideFlags: 1

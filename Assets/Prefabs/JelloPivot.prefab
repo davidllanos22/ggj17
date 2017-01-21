@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 114220497450552044}
   - component: {fileID: 54431296607905746}
   - component: {fileID: 114050839709061950}
+  - component: {fileID: 136537233373654706}
   m_Layer: 0
   m_Name: JelloPivot
   m_TagString: Untagged
@@ -128,6 +129,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waterImpulse: 5
+--- !u!136 &136537233373654706
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1594703995496176}
+  m_Material: {fileID: 13400000, guid: c60c860d601658548b6c2861ae5bd22a, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.125
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!212 &212631875189217884
 SpriteRenderer:
   m_ObjectHideFlags: 1

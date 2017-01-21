@@ -5,7 +5,7 @@ using UnityEngine;
 public class WaterCPU : MonoBehaviour {
 
     public float tilesPerSecond = 10;
-    public float reboundReduction = .8f;
+    public float reboundReduction = .9f;
     static private long TICKSINSECONDS = 10000000;
 
     int width, height;
@@ -19,13 +19,14 @@ public class WaterCPU : MonoBehaviour {
     bool running = true;
 
     List<WaveInfo> wavesToAdd;
-
+    List<WaveInfo> reboundsToAdd;
 
     private System.Threading.Thread waveProc;
 
     class WaveInfo {
-        public int i, j, k, power;
-        public WaveInfo(int ii,int jj,int kk,int pp)
+        public int i, j, k;
+        public float power;
+        public WaveInfo(int ii,int jj,int kk,float pp)
         {
             i = ii;
             j = jj;
@@ -93,6 +94,7 @@ public class WaterCPU : MonoBehaviour {
         pool2 = new float[w, h, 9];
         waterMatrix = new Vector3[w, h];
         wavesToAdd = new List<WaveInfo>();
+        reboundsToAdd = new List<WaveInfo>();
 
         for (int i = 0; i < w; ++i)
         {
@@ -159,9 +161,15 @@ public class WaterCPU : MonoBehaviour {
                     } else newPool[i, j, k] = 0;
 
                     //Rebound
-                    if (xCols[dirColisions[k, 0]] && yCols[dirColisions[k, 1]]) oldPool[i, j, dirrebound[k, 2]] += oldPool[i, j, k] * reboundReduction;
-                    else if (yCols[dirColisions[k, 1]]) oldPool[i, j, dirrebound[k, 1]] += oldPool[i, j, k] * reboundReduction;
-                    else if (xCols[dirColisions[k, 0]]) oldPool[i, j, dirrebound[k, 0]] += oldPool[i, j, k] * reboundReduction;
+                    if (xCols[dirColisions[k, 0]] || yCols[dirColisions[k, 1]])
+                    {
+                        WaveInfo wi;
+                        if (!yCols[dirColisions[k, 1]]) wi = new WaveInfo(i, j, dirrebound[k, 0], oldPool[i, j, k] * reboundReduction); //xColision only
+                        else if (!xCols[dirColisions[k, 0]]) wi = new WaveInfo(i, j, dirrebound[k, 1], oldPool[i, j, k] * reboundReduction); //yColision only
+                        else wi = new WaveInfo(i, j, dirrebound[k, 2], oldPool[i, j, k] * reboundReduction); //both colisions
+                        oldPool[i, j, k] = 0;
+                        reboundsToAdd.Add(wi);
+                    }
                 }
             }
         }
@@ -187,6 +195,13 @@ public class WaterCPU : MonoBehaviour {
                 }
             }
         }
+
+        foreach (WaveInfo wi in reboundsToAdd)
+        {
+            newPool[wi.i, wi.j, wi.k] += wi.power;
+            newPool[wi.i, wi.j, 0] = Mathf.Clamp(newPool[wi.i, wi.j, 0] + oldPool[wi.i, wi.j, wi.k], poolmin, poolmax);
+        }
+        reboundsToAdd.Clear();
 
         lock (waterMatrix) {
             for (int i = 0; i < width; ++i)
@@ -221,7 +236,7 @@ public class WaterCPU : MonoBehaviour {
         if (wave.x < 0) angle = 360 - angle;
         angle = Mathf.Floor(angle / 45 + 1);
 
-        WaveInfo wi = new WaveInfo((int)position.x, (int)position.y, (int)angle, (int)wave.magnitude);
+        WaveInfo wi = new WaveInfo((int)position.x, (int)position.y, (int)angle, wave.magnitude);
         lock (wavesToAdd)
         {
             wavesToAdd.Add(wi);
