@@ -64,9 +64,9 @@
 				fixed4 col = tex2D(_MainTex, i.uv);
 				fixed delay = tex2D(_DelayTex, i.uv).r;
 				float h = i.h + 1;
-				h = floor(h * 8)/8;
+				h = ceil(h * 8)/8;
 
-				if (delay < abs(i.h) * 2) {
+				if (delay < abs(i.h) * 4) {
 					col = tex2D(_DetailTex, i.uv);
 				}
 				col.rgb *= h;
