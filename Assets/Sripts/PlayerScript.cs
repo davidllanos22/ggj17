@@ -70,7 +70,7 @@ public class PlayerScript : MonoBehaviour
                 if (rb.velocity.magnitude < maxSpeed) rb.AddForce(Time.deltaTime * lookDir * speed);
                 if (timer <= 0)
                 {
-                    controller.AddWave(transform.position - lookDir * .1f * tileSize, -new Vector2(lookDir.x, lookDir.z) * waveHeight);
+                    controller.AddWave(transform.position - lookDir * (.3f + ((lookDir.z > 0) ? 0 : 1f)) * tileSize, -new Vector2(lookDir.x, lookDir.z) * waveHeight);
                     timer = stepWave;
                 }
 
@@ -85,7 +85,7 @@ public class PlayerScript : MonoBehaviour
 
             if (Input.GetButtonUp(inputs[inputType, 3] + playerId))
             {
-                controller.AddWave(transform.position + lookDir * .1f * tileSize, new Vector2(lookDir.x, lookDir.z) * waveHeight * potency * attackMultiplyer);
+                controller.AddWave(transform.position + lookDir * (.3f + ((lookDir.z < 0) ? 0 : .3f)) * tileSize, new Vector2(lookDir.x, lookDir.z) * waveHeight * potency * attackMultiplyer);
                 rb.AddForce(Time.deltaTime * -lookDir * 2 * speed * potency);
                 potency = 0;
             }

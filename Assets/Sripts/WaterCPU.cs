@@ -248,7 +248,6 @@ public class WaterCPU : MonoBehaviour {
             float angleIni = Mathf.Floor(angle);
             float power = 1 - (angle - angleIni);
 
-            Debug.Log(angle + " " + power);
             WaveInfo wi1 = new WaveInfo((int)position.x, (int)position.y, (int)angleIni, wave.magnitude * power);
             WaveInfo wi2 = new WaveInfo ((int)position.x, (int)position.y, (int)((angleIni == 8) ? 1 : angleIni + 1), wave.magnitude *(1 - power));
             lock (wavesToAdd) {
