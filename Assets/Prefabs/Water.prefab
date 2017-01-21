@@ -92,8 +92,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a3ba04cda1ca4484abd87514c35b585, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilesPerSecond: 25
-  reboundReduction: 0.9
+  stepsPerSecond: 25
+  reboundReduction: 0.2
 --- !u!114 &114535677530686196
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -106,7 +106,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waterCalculator: {fileID: 114174371241731956}
-  waterTileSize: {x: 1, y: 0, z: 1}
-  waterIntensityHeight: 4
-  width: 32
-  height: 16
+  waterTileSize: {x: 0.5, y: 0, z: 0.5}
+  waterIntensityHeight: 1
+  width: 64
+  height: 32
+  uvScale: 0.5

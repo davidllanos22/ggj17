@@ -9,6 +9,7 @@ public class VisualWater : MonoBehaviour {
 	public float waterIntensityHeight = 1f;
     public int width = 32;
     public int height = 16;
+	public float uvScale = 1f;
     GameController gc;
     Mesh waterMesh;
 
@@ -53,7 +54,7 @@ public class VisualWater : MonoBehaviour {
 		for (int i = 0; i < w; ++i) {
 			for (int j = 0; j < h; ++j) {
 				vertices [i + j * w] = new Vector3 ((i - 1)* waterTileSize.x, 0, (j - 1) * waterTileSize.z);
-				uv [i + j * w] = new Vector2 ((float)i, (float)j);
+				uv [i + j * w] = new Vector2 ((float)i*uvScale, (float)j*uvScale);
 			}
 		}
 

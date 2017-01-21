@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WaterCPU : MonoBehaviour {
 
-    public float tilesPerSecond = 10;
+    public float stepsPerSecond = 25;
     public float reboundReduction = .9f;
     static private long TICKSINSECONDS = 10000000;
 
@@ -18,6 +18,8 @@ public class WaterCPU : MonoBehaviour {
     Vector3[,] waterMatrix;
     bool usePool1 = true;
     bool running = true;
+	bool doStep = true;
+	float lastStepTime = 0f;
 
 	bool isDirty = false;
 
@@ -113,6 +115,7 @@ public class WaterCPU : MonoBehaviour {
         }
         waveProc = new System.Threading.Thread(() => Waves());
         waveProc.Start();
+		lastStepTime = Time.time;
 	}
 
     void Waves()
@@ -121,8 +124,8 @@ public class WaterCPU : MonoBehaviour {
         long endTime;
         while (running)
         {
+			while (!doStep) {}
 
-            startTime = System.DateTime.Now.Ticks;
             lock (wavesToAdd) {
                 foreach (WaveInfo wi in wavesToAdd)
                 {
@@ -131,10 +134,8 @@ public class WaterCPU : MonoBehaviour {
                 wavesToAdd.Clear();
             }
             Step();
-            endTime = System.DateTime.Now.Ticks;
-			while (endTime - startTime < TICKSINSECONDS / tilesPerSecond) {
-				endTime = System.DateTime.Now.Ticks;
-			}
+
+			doStep = false;
         }
     }
 	
@@ -272,6 +273,7 @@ public class WaterCPU : MonoBehaviour {
         }
 	}
     
+
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.C))
@@ -280,6 +282,11 @@ public class WaterCPU : MonoBehaviour {
             Vector2 wave = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
             AddWave(pos, wave.normalized*Random.Range(10f,30f));
         }
+
+		if (Time.time - lastStepTime > 1f / stepsPerSecond) {
+			doStep = true;
+			lastStepTime = Time.time;
+		}
     }
 
     private void OnDestroy()
