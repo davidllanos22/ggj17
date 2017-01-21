@@ -44,7 +44,6 @@
 			};
 
 			sampler2D _MainTex;
-			sampler2D _DetailTex;
 			sampler2D _DelayTex;
 			float4 _MainTex_ST;
 			
@@ -66,8 +65,9 @@
 				float h = i.h + 1;
 				h = ceil(h * 8)/8;
 
-				if (delay < abs(i.h) * 4) {
-					col = tex2D(_DetailTex, i.uv);
+				float f = abs(i.h) * 4;
+				if (delay < f) {
+					col.rgb += fixed3(f, f, f);// lerp(col.rgb, fixed3(1, 1, 1), h);
 				}
 				col.rgb *= h;
 				col.a = 0.5f + 0.5*abs(i.h);
