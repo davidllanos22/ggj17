@@ -115,27 +115,17 @@ public class WaterCPU : MonoBehaviour {
         }
         waveProc = new System.Threading.Thread(() => Waves());
         waveProc.Start();
-		lastStepTime = Time.time;
+		lastStepTime = Time.realtimeSinceStartup;
 	}
 
     void Waves()
     {
-        long startTime;
-        long endTime;
         while (running)
         {
-			while (!doStep) {}
+            SimulateWater();
+            while (!doStep && running) { }
+            doStep = false;
 
-            lock (wavesToAdd) {
-                foreach (WaveInfo wi in wavesToAdd)
-                {
-                    AddWaveToPool(wi);
-                }
-                wavesToAdd.Clear();
-            }
-            Step();
-
-			doStep = false;
         }
     }
 	
@@ -213,6 +203,7 @@ public class WaterCPU : MonoBehaviour {
         }
 		reboundsToAdd.Clear();
 
+
         lock (waterMatrix) {
             for (int i = 0; i < width; ++i)
             {
@@ -237,13 +228,19 @@ public class WaterCPU : MonoBehaviour {
     }
 
 	void AddWaveToPool (WaveInfo wi) {
-        
-        if(usePool1) pool1[wi.i, wi.j, wi.k] += wi.power;
-        else pool2[wi.i, wi.j, wi.k] += wi.power;
+        try
+        {
+            if (usePool1) pool1[wi.i, wi.j, wi.k] += wi.power;
+            else pool2[wi.i, wi.j, wi.k] += wi.power;
+        } catch
+        {
+            Debug.LogError(wi.i + " " + wi.j + " " + wi.k);
+        }
     }
 
     public void AddWave(Vector2 position, Vector2 wave)
     {
+        position = new Vector2(Mathf.Clamp(position.x, 0, width-1), Mathf.Clamp(position.y, 0, height-1))  ;
 		if (wavesToAdd.Count < wavesToAdd.Capacity) {
 			float angle = Vector2.Angle (new Vector2 (0, 1), wave);
 			if (wave.x < 0)
@@ -283,9 +280,9 @@ public class WaterCPU : MonoBehaviour {
             AddWave(pos, wave.normalized*Random.Range(10f,30f));
         }
 
-		if (Time.time - lastStepTime > 1f / stepsPerSecond) {
+		if (Time.realtimeSinceStartup - lastStepTime > 1f / stepsPerSecond) {
 			doStep = true;
-			lastStepTime = Time.time;
+			lastStepTime = Time.realtimeSinceStartup;
 		}
     }
 
@@ -297,4 +294,17 @@ public class WaterCPU : MonoBehaviour {
 	public bool IsDirty() {
 		return isDirty;
 	}
+
+    void SimulateWater()
+    {
+        lock (wavesToAdd)
+        {
+            foreach (WaveInfo wi in wavesToAdd)
+            {
+                AddWaveToPool(wi);
+            }
+            wavesToAdd.Clear();
+        }
+        Step();
+    }
 }
