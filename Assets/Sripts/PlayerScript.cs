@@ -14,7 +14,7 @@ public class PlayerScript : MonoBehaviour
     Rigidbody rb;
     float maxSpeed = 100f;
     float speed = 5000f;
-    float waveHeight = 5f;
+    float waveHeight = 10f;
     float attackMultiplyer = 5f;
     float potency = 0f;
     float chargeSpeed = 10f;
@@ -36,7 +36,7 @@ public class PlayerScript : MonoBehaviour
     bool stateI = true;
 
     float deadTimer = 3f;
-    float sinkingSpeed = .7f;
+    float sinkingSpeed = .6f;
     bool alive = true;
 
     Vector3 lookDir;
@@ -61,16 +61,16 @@ public class PlayerScript : MonoBehaviour
         if (alive)
         {
             Vector3 charDir = new Vector3(Input.GetAxis(inputs[inputType, 0] + playerId), 0, Input.GetAxis(inputs[inputType, 1] + playerId));
-            if (charDir.magnitude > 0.2f) lookDir = new Vector3(Mathf.Round(charDir.normalized.x), 0, Mathf.Round(charDir.normalized.z));
+            if (charDir.magnitude > 0.2f) lookDir = new Vector3(charDir.normalized.x, 0, charDir.normalized.z);
             if (timer > 0) timer -= Time.deltaTime;
             bool swimming = false;
             bool charging = false;
-            if (Input.GetAxis(inputs[inputType, 2] + playerId) > .1f || Input.GetKey(KeyCode.K))
+            if (Input.GetAxis(inputs[inputType, 2] + playerId) > .1f)
             {
                 if (rb.velocity.magnitude < maxSpeed) rb.AddForce(Time.deltaTime * lookDir * speed);
                 if (timer <= 0)
                 {
-                    controller.AddWave(transform.position - lookDir * .1f * tileSize, -new Vector2(lookDir.x, lookDir.z) * waveHeight);
+                    controller.AddWave(transform.position - lookDir * (.3f + ((lookDir.z > 0) ? 0 : 1f)) * tileSize, -new Vector2(lookDir.x, lookDir.z) * waveHeight);
                     timer = stepWave;
                 }
 
@@ -85,7 +85,7 @@ public class PlayerScript : MonoBehaviour
 
             if (Input.GetButtonUp(inputs[inputType, 3] + playerId))
             {
-                controller.AddWave(transform.position + lookDir * .1f * tileSize, new Vector2(lookDir.x, lookDir.z) * waveHeight * potency * attackMultiplyer);
+                controller.AddWave(transform.position + lookDir * (.3f + ((lookDir.z < 0) ? 0 : .3f)) * tileSize, new Vector2(lookDir.x, lookDir.z) * waveHeight * potency * attackMultiplyer);
                 rb.AddForce(Time.deltaTime * -lookDir * 2 * speed * potency);
                 potency = 0;
             }
@@ -123,6 +123,7 @@ public class PlayerScript : MonoBehaviour
                 imp.enabled = true;
                 alive = true;
                 iFrames = 2f;
+                anim.SetBool("Alive", alive);
             }
         }
     }
@@ -154,6 +155,8 @@ public class PlayerScript : MonoBehaviour
             controller.waitRespawn(playerId);
             deadTimer = 3f;
             alive = false;
+            anim.SetBool("Alive", alive);
+            lookDir = -Vector3.forward;
         }
     }
 }
