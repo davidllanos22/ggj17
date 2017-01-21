@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
 {
+
+    string[,] inputs = new string[,]
+    {
+        {"Horizontal", "Vertical", "A", "X" },
+        {"Horiz", "Vert", "Swim", "Charge" }
+    };
+
     Rigidbody rb;
     float maxSpeed = 100f;
     float speed = 5000f;
@@ -18,6 +25,7 @@ public class PlayerScript : MonoBehaviour
 
     public GameController controller;
     public int playerId = 1;
+    int inputType = 1;
 
     public float iFrames = 1f;
     float blinkRate = .08f;
@@ -42,12 +50,12 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 charDir = new Vector3(Input.GetAxis("Horizontal" + playerId), 0, Input.GetAxis("Vertical" + playerId));
+        Vector3 charDir = new Vector3(Input.GetAxis(inputs[inputType, 0] + playerId), 0, Input.GetAxis(inputs[inputType, 1] + playerId));
         if (charDir.magnitude > 0.2f) lookDir = new Vector3(Mathf.Round(charDir.normalized.x), 0, Mathf.Round(charDir.normalized.z)) ;
         if (timer > 0) timer -= Time.deltaTime;
         bool swimming = false;
         bool charging = false;
-        if (Input.GetButton("A" + playerId) || Input.GetKey(KeyCode.K))
+        if (Input.GetAxis(inputs[inputType, 2] + playerId) > .1f || Input.GetKey(KeyCode.K))
         {
             if (rb.velocity.magnitude < maxSpeed) rb.AddForce(Time.deltaTime * lookDir * speed);
             if (timer <= 0)
@@ -59,13 +67,13 @@ public class PlayerScript : MonoBehaviour
             swimming = true;
         }
 
-        if (Input.GetButton("X" + playerId))
+        if (Input.GetButton(inputs[inputType, 3] + playerId))
         {
             potency = Mathf.Min(potency + Time.deltaTime * chargeSpeed, maxPotency);
             charging = true;
         }
 
-        if (Input.GetButtonUp("X" + playerId))
+        if (Input.GetButtonUp(inputs[inputType, 3] + playerId))
         {
             controller.AddWave(transform.position + lookDir, new Vector2(lookDir.x, lookDir.z) * waveHeight * potency * attackMultiplyer);
             rb.AddForce(Time.deltaTime * -lookDir * 2 * speed * potency);
