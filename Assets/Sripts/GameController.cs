@@ -9,6 +9,7 @@ public class GameController : MonoBehaviour {
     public PlayerScript playerPrefab;
     public JelloScript jelloPrefab;
     public GameObject wallPrefab;
+	public Scenery sceneryPrefab;
     public List<Sprite> badges;
 
 	public float wallHeight = 3f;
@@ -72,9 +73,13 @@ public class GameController : MonoBehaviour {
 		}
 		cameraFollowing [cameraFollowing.Length - 1] = jello.gameObject;
 
-		gameCamera.Init (cameraFollowing, new Vector2(visualWater.width * visualWater.waterTileSize.x, visualWater.height * visualWater.waterTileSize.z));
+		Vector2 poolSize = new Vector2 (visualWater.width * visualWater.waterTileSize.x, visualWater.height * visualWater.waterTileSize.z);
+		gameCamera.Init (cameraFollowing, poolSize);
 		gameCamera.transform.SetParent (transform);
 		gameCamera.transform.position = transform.position + new Vector3 (visualWater.width / 2 * visualWater.waterTileSize.x, 0, visualWater.height / 2 * visualWater.waterTileSize.z);
+	
+		Scenery scenery = ((GameObject) Instantiate (sceneryPrefab.gameObject)).GetComponent<Scenery> ();
+		scenery.Init (poolSize);
 	}
 
     void GenerateWalls()
