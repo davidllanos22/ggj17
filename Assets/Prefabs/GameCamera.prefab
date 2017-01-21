@@ -104,6 +104,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deltaPos: {x: 0, y: 6, z: -21}
+  minCameraWidth: 10
+  cameraMarginSides: 2
+  cameraAngle: 45
 --- !u!124 &124008193280092616
 Behaviour:
   m_ObjectHideFlags: 1

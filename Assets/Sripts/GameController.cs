@@ -53,7 +53,7 @@ public class GameController : MonoBehaviour {
             players[i].playerId = i + 1;
             players[i].gameObject.name = "player" + (i+1).ToString();
 
-            players[i].transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = badges[i];
+			players[i].billboardRenderer.sprite = badges[i];
 
             playerDeaths[i] = 0;
             respanTimers[i] = 0;

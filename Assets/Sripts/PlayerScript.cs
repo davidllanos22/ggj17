@@ -28,13 +28,13 @@ public class PlayerScript : MonoBehaviour
 
     Vector3 lookDir;
 
-    Animator anim;
+    public Animator anim;
+	public SpriteRenderer billboardRenderer;
 
     // Use this for initialization
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        anim = transform.GetChild(0).GetComponent<Animator>();
         rend = GetComponentInChildren<SpriteRenderer>();
         lookDir = -Vector3.forward;
     }
