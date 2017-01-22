@@ -82,4 +82,14 @@ public class JelloScript : MonoBehaviour
         anim.SetBool("Left", left);
         anim.SetBool("Right", right);
     }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.tag == "Jello")
+        {
+            Vector3 dir = transform.position - collision.transform.position;
+            dir.y = 0;
+            rig.AddForce(dashSpeed * dir.normalized);
+        }
+    }
 }
