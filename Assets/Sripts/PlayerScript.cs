@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
 {
-
-
     string[,] inputs = new string[,]
     {
         {"Horizontal", "Vertical", "A", "X", "B" },

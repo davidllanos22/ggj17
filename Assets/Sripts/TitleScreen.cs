@@ -3,7 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TitleScreen : MonoBehaviour {
-
+	
+	int readyPlayers;
+	float readyTime = 0;
+	int readyCount = 0;
+	public Animator[] readies;
 
 	public float speed = 1f;
 	public float displacement = 10f;
@@ -43,9 +47,34 @@ public class TitleScreen : MonoBehaviour {
 		string axis = "Swim";
 		#endif
 
-		if ((Input.GetAxis (axis+"1") > 0.2f && Input.GetAxis (axis+"2") > 0.2f && Input.GetAxis (axis+"3") > 0.2f && Input.GetAxis (axis+"4") > 0.2f) || Input.GetKeyDown (KeyCode.Space)) {
+
+		readyPlayers = 0;
+		for (int i = 0; i < 4; ++i) {
+			if (Input.GetAxis (axis + (i + 1).ToString ()) > 0.2f) {
+				++readyPlayers;
+				readies [i].SetBool ("Ready", true);
+			} else {
+				readies [i].SetBool ("Ready", false);
+			}
+		}
+		if (readyPlayers != readyCount) {
+			readyTime = 0f;
+		}
+
+		if (readyPlayers >= 2) {
+			readyTime += Time.deltaTime;
+		} else {
+			readyTime = 0;
+		}
+
+		readyCount = readyPlayers;
+			
+
+		if (readyTime >= 3f || Input.GetKeyDown (KeyCode.Space)) {
 			UnityEngine.SceneManagement.SceneManager.LoadScene (1);
 			this.enabled = false;
 		}
+
+
 	}
 }
