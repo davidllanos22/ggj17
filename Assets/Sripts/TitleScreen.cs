@@ -37,8 +37,15 @@ public class TitleScreen : MonoBehaviour {
 
 		transform.position = pos;
 
-		if ((Input.GetAxis ("Swim1") > 0.2f && Input.GetAxis ("Swim2") > 0.2f && Input.GetAxis ("Swim3") > 0.2f && Input.GetAxis ("Swim4") > 0.2f) || Input.GetKeyDown (KeyCode.Space)) {
-		
+		#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
+		string axis = "MSwim";
+		#else
+		string axis = "Swim";
+		#endif
+
+		if ((Input.GetAxis (axis+"1") > 0.2f && Input.GetAxis (axis+"2") > 0.2f && Input.GetAxis (axis+"3") > 0.2f && Input.GetAxis (axis+"4") > 0.2f) || Input.GetKeyDown (KeyCode.Space)) {
+			UnityEngine.SceneManagement.SceneManager.LoadScene (1);
+			this.enabled = false;
 		}
 	}
 }

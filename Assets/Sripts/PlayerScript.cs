@@ -5,10 +5,15 @@ using UnityEngine;
 public class PlayerScript : MonoBehaviour
 {
 
+
     string[,] inputs = new string[,]
     {
         {"Horizontal", "Vertical", "A", "X", "B" },
-        {"Horiz", "Vert", "Swim", "Charge", "Scream" }
+	#if (UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX)
+		{"MHoriz", "MVert", "MSwim", "MCharge", "MScream" }
+	#else
+    	{"Horiz", "Vert", "Swim", "Charge", "Scream" }
+	#endif
     };
 
     public GameObject sprite;

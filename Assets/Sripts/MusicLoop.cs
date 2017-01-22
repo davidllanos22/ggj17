@@ -6,10 +6,6 @@ public class MusicLoop : MonoBehaviour {
 
 
     public AudioSource aud;
-    private void Start()
-    {
-        aud.time = 40;
-    }
     
 	void Update () {
 		if(!aud.isPlaying)

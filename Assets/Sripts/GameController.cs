@@ -107,6 +107,7 @@ public class GameController : MonoBehaviour {
             Debug.Log(playersEliminated[i].playerId);
         }*/
         playing = false;
+		UnityEngine.SceneManagement.SceneManager.LoadScene (0);
     }
 
     void GenerateWalls()
