@@ -181,7 +181,8 @@ public class GameController : MonoBehaviour {
     }
 
     public void waitRespawn(int id)
-    {
+	{
+		players [id - 1].RemoveLive (playerDeaths [id - 1]);
         playerDeaths[id-1]++;
         if (playerDeaths[id-1] >= maxLives)
         {

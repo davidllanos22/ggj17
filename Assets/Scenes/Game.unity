@@ -149,6 +149,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 8fc4f2c0bc496400694c0ec892f78dc5, type: 3}
   wallHeight: 3
   simulationFPSText: {fileID: 620461121}
+  playing: 0
+  playersEliminated: []
 --- !u!1 &195114422
 GameObject:
   m_ObjectHideFlags: 0

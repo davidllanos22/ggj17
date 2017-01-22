@@ -26,7 +26,7 @@ public class PlayerScript : MonoBehaviour
 
     public GameController controller;
     public int playerId = 1;
-    int inputType = 1;
+    public int inputType = 1;
 
     public float iFrames = 1f;
     float blinkRate = .08f;
@@ -55,6 +55,9 @@ public class PlayerScript : MonoBehaviour
     public AudioClip[] screams;
     public AudioClip drownAudio;
 
+	public Animator[] lives;
+	public GameObject livesHolder;
+
     float audioSwimTimer = 0f;
     float audioSwimStep = .85f;
 
@@ -66,6 +69,7 @@ public class PlayerScript : MonoBehaviour
         rend = GetComponentInChildren<SpriteRenderer>();
         lookDir = -Vector3.forward;
         imp = GetComponent<ImpulseSystem>();
+		livesHolder.SetActive (false);
     }
 
     // Update is called once per frame
@@ -165,6 +169,8 @@ public class PlayerScript : MonoBehaviour
                     alive = true;
                     iFrames = 2f;
                     anim.SetBool("Alive", alive);
+
+					livesHolder.SetActive (false);
                 }
             }
             else transform.position -= sinkingSpeed * Time.deltaTime * Vector3.up;
@@ -207,4 +213,10 @@ public class PlayerScript : MonoBehaviour
 
         }
     }
+
+	public void RemoveLive(int deaths) {
+		
+		livesHolder.SetActive (true);
+		lives [deaths].SetTrigger ("Die");
+	}
 }
