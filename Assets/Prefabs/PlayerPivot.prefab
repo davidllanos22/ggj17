@@ -635,9 +635,10 @@ MonoBehaviour:
   oneShotAudio: {fileID: 82188830850236490}
   cutAudio: {fileID: 82128330416683896}
   attackInterv:
-  - {fileID: 8300000, guid: 5d35c92d4a9084380884bddbca90872f, type: 3}
-  - {fileID: 8300000, guid: 1b04c4b2e715647a381866dccddf0f41, type: 3}
-  - {fileID: 8300000, guid: 3b21af7b20b7044b1bf51c7a1a38ed82, type: 3}
+  - {fileID: 8300000, guid: c9a7ec2407ba35745b10b209ced0a3f5, type: 3}
+  - {fileID: 8300000, guid: 193eeec2d1e9e1f40adf58dc78c5b8b7, type: 3}
+  - {fileID: 8300000, guid: d693eae5f0988c54390869197bd64506, type: 3}
+  - {fileID: 8300000, guid: 570dcc478566526479bc4b7dc863f4d9, type: 3}
   chargeRand:
   - {fileID: 8300000, guid: e6ce46a78335b4c8fa54766a65be446d, type: 3}
   - {fileID: 8300000, guid: 2ee3b5185cc634a56a87daee1f69092b, type: 3}
