@@ -11,6 +11,8 @@ public class JelloScript : MonoBehaviour {
     public Animator anim;
 
     float timerMitosis;
+    float timerDash;
+    float dashSpeed = 300f;
 
     // Use this for initialization
     void Start () {
@@ -18,6 +20,7 @@ public class JelloScript : MonoBehaviour {
         rend = GetComponentInChildren<SpriteRenderer>();
 
         timerMitosis = Random.Range(10, 20);
+        timerDash = Random.Range(4, 8);
     }
 
     // Update is called once per frame
@@ -34,6 +37,12 @@ public class JelloScript : MonoBehaviour {
         else if (timerMitosis < 5)
         {
             rend.color = new Color(1, rend.color.g - .2f * Time.deltaTime, rend.color.b - .2f * Time.deltaTime);
+        }
+        timerDash -= Time.deltaTime;
+        if (timerDash < 0)
+        {
+            rig.AddForce(dashSpeed * new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)));
+            timerDash = Random.Range(4, 8);
         }
     }
 

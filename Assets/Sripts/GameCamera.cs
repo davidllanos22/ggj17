@@ -56,7 +56,7 @@ public class GameCamera : MonoBehaviour {
 
 		float r = delta.x / delta.y;
 
-		float hFov = Camera.main.fieldOfView / 2f;
+		//float hFov = Camera.main.fieldOfView / 2f;
 		//float beta = 180 - cameraAngle - hFov;
 
 
