@@ -276,12 +276,12 @@ public class WaterCPU : MonoBehaviour {
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.C))
+        /*if(Input.GetKeyDown(KeyCode.C))
         {
             Vector2 pos = new Vector2(Random.Range(0, width), Random.Range(0, height));
             Vector2 wave = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
             AddWave(pos, wave.normalized*Random.Range(10f,30f));
-        }
+        }*/
 
 		if (Time.realtimeSinceStartup - lastStepTime > 1f / stepsPerSecond) {
 			doStep = true;
