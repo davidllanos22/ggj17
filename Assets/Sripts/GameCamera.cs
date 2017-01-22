@@ -35,7 +35,8 @@ public class GameCamera : MonoBehaviour {
 		middlePos = Vector3.zero;
 		for (int i = 0; i < players.Count; ++i) {
 
-			if (players [i].activeInHierarchy) {
+			PlayerScript ps = players [i].GetComponentInChildren<PlayerScript> ();
+			if (players [i].activeInHierarchy && (ps == null || !ps.gameOver)) {
 				middlePos += players [i].transform.position;
 
 				min.x = Mathf.Min (min.x, players [i].transform.position.x - cameraMarginSides);
