@@ -104,6 +104,7 @@ public class PlayerScript : MonoBehaviour
             {
                 potency = Mathf.Min(potency + Time.deltaTime * chargeSpeed, maxPotency);
                 charging = true;
+                if (potency < maxPotency) rend.color = new Color(rend.color.r, rend.color.g - .3f *Time.deltaTime * maxPotency / chargeSpeed, rend.color.b - Time.deltaTime * maxPotency / chargeSpeed);
             }
 
             if (Input.GetButtonUp(inputs[inputType, 3] + playerId))
@@ -116,6 +117,8 @@ public class PlayerScript : MonoBehaviour
                 oneShotAudio.PlayOneShot(attackInterv[index]);
 
                 potency = 0;
+
+                rend.color = Color.white;
             }
 
             //Scream audio
