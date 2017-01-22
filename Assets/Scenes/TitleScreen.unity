@@ -243,6 +243,7 @@ GameObject:
   - component: {fileID: 1007240775}
   - component: {fileID: 1007240777}
   - component: {fileID: 1007240776}
+  - component: {fileID: 1007240778}
   m_Layer: 5
   m_Name: Player3
   m_TagString: Untagged
@@ -266,7 +267,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 150, y: 64}
-  m_SizeDelta: {x: 128, y: 128}
+  m_SizeDelta: {x: 128, y: 512}
   m_Pivot: {x: 0.6, y: 0}
 --- !u!114 &1007240776
 MonoBehaviour:
@@ -289,7 +290,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: fcdf1b80d28bb4e2895b74a020cfab5f, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -301,6 +302,23 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1007240774}
+--- !u!95 &1007240778
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1007240774}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8015d79800184411f93940733b85a360, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &1014803036
 GameObject:
   m_ObjectHideFlags: 0
@@ -483,6 +501,7 @@ GameObject:
   - component: {fileID: 1094138197}
   - component: {fileID: 1094138199}
   - component: {fileID: 1094138198}
+  - component: {fileID: 1094138200}
   m_Layer: 5
   m_Name: Player4
   m_TagString: Untagged
@@ -506,7 +525,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 450, y: 64}
-  m_SizeDelta: {x: 128, y: 128}
+  m_SizeDelta: {x: 128, y: 512}
   m_Pivot: {x: 0.6, y: 0}
 --- !u!114 &1094138198
 MonoBehaviour:
@@ -529,7 +548,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 8fc4f2c0bc496400694c0ec892f78dc5, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -541,6 +560,23 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1094138196}
+--- !u!95 &1094138200
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1094138196}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8015d79800184411f93940733b85a360, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1001 &1240283743
 Prefab:
   m_ObjectHideFlags: 0
@@ -663,6 +699,7 @@ GameObject:
   - component: {fileID: 1345493579}
   - component: {fileID: 1345493581}
   - component: {fileID: 1345493580}
+  - component: {fileID: 1345493582}
   m_Layer: 5
   m_Name: Player2
   m_TagString: Untagged
@@ -686,7 +723,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: -150, y: 64}
-  m_SizeDelta: {x: 128, y: 128}
+  m_SizeDelta: {x: 128, y: 512}
   m_Pivot: {x: 0.6, y: 0}
 --- !u!114 &1345493580
 MonoBehaviour:
@@ -709,7 +746,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 33118da0bbc184e4aa538c4e98e94d89, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -721,6 +758,23 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1345493578}
+--- !u!95 &1345493582
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1345493578}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8015d79800184411f93940733b85a360, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &1416609517
 GameObject:
   m_ObjectHideFlags: 0
@@ -785,8 +839,8 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 2
   m_RenderMode: 0
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
+  m_Camera: {fileID: 1493384058}
+  m_PlaneDistance: 2
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -851,17 +905,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 6df18f22248fd45ed8d94b31928210f7, type: 2}
-  readies:
-  - {fileID: 2023949449}
-  - {fileID: 1345493580}
-  - {fileID: 1007240776}
-  - {fileID: 1094138198}
-  offSprite: {fileID: 21300002, guid: 2587aa0e2283a4a0ea4c2c8942893851, type: 3}
-  onSprites:
-  - {fileID: 21300000, guid: 2587aa0e2283a4a0ea4c2c8942893851, type: 3}
-  - {fileID: 21300000, guid: 33118da0bbc184e4aa538c4e98e94d89, type: 3}
-  - {fileID: 21300000, guid: fcdf1b80d28bb4e2895b74a020cfab5f, type: 3}
-  - {fileID: 21300000, guid: 8fc4f2c0bc496400694c0ec892f78dc5, type: 3}
+  readyAnim:
+  - {fileID: 2023949451}
+  - {fileID: 1345493582}
+  - {fileID: 1007240778}
+  - {fileID: 1094138200}
   speed: 1
   displacement: 10
   height: 0.3
@@ -1174,6 +1222,7 @@ GameObject:
   - component: {fileID: 2023949448}
   - component: {fileID: 2023949450}
   - component: {fileID: 2023949449}
+  - component: {fileID: 2023949451}
   m_Layer: 5
   m_Name: Player1
   m_TagString: Untagged
@@ -1197,7 +1246,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: -450, y: 64}
-  m_SizeDelta: {x: 128, y: 128}
+  m_SizeDelta: {x: 128, y: 512}
   m_Pivot: {x: 0.6, y: 0}
 --- !u!114 &2023949449
 MonoBehaviour:
@@ -1220,7 +1269,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 2587aa0e2283a4a0ea4c2c8942893851, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -1232,6 +1281,23 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2023949447}
+--- !u!95 &2023949451
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2023949447}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8015d79800184411f93940733b85a360, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1001 &2031079813
 Prefab:
   m_ObjectHideFlags: 0
