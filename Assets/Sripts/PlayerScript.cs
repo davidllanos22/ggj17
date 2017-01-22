@@ -38,6 +38,7 @@ public class PlayerScript : MonoBehaviour
     float deadTimer = 3f;
     float sinkingSpeed = .6f;
     bool alive = true;
+    public bool gameOver = false;
 
     Vector3 lookDir;
 
@@ -58,7 +59,7 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (alive)
+        if (alive && controller.playing)
         {
             Vector3 charDir = new Vector3(Input.GetAxis(inputs[inputType, 0] + playerId), 0, Input.GetAxis(inputs[inputType, 1] + playerId));
             if (charDir.magnitude > 0.2f) lookDir = new Vector3(charDir.normalized.x, 0, charDir.normalized.z);
@@ -114,16 +115,20 @@ public class PlayerScript : MonoBehaviour
         }
         else
         {
-            transform.position -= sinkingSpeed * Time.deltaTime * Vector3.up;
-            deadTimer -= Time.deltaTime;
-            if (deadTimer <= 0)
+            if (!gameOver)
             {
-                //transform.position = new Vector3(transform.position.x, 0, transform.position.z);
-                imp.SetAlive(true);
-                alive = true;
-                iFrames = 2f;
-                anim.SetBool("Alive", alive);
+                transform.position -= sinkingSpeed * Time.deltaTime * Vector3.up;
+                deadTimer -= Time.deltaTime;
+                if (deadTimer <= 0)
+                {
+                    //transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+                    imp.SetAlive(true);
+                    alive = true;
+                    iFrames = 2f;
+                    anim.SetBool("Alive", alive);
+                }
             }
+            else transform.position -= sinkingSpeed * Time.deltaTime * Vector3.up;
         }
     }
 

@@ -25,24 +25,27 @@ public class JelloScript : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        SetAnimations(rig.velocity.x, rig.velocity.z);
+        if (gc.playing)
+        {
+            SetAnimations(rig.velocity.x, rig.velocity.z);
 
-        timerMitosis -= Time.deltaTime;
-        if (timerMitosis <= 0)
-        {
-            gc.splitJello(gameObject);
-            timerMitosis = Random.Range(10, 20);
-            rend.color = Color.white;
-        }
-        else if (timerMitosis < 5)
-        {
-            rend.color = new Color(1, rend.color.g - .2f * Time.deltaTime, rend.color.b - .2f * Time.deltaTime);
-        }
-        timerDash -= Time.deltaTime;
-        if (timerDash < 0)
-        {
-            rig.AddForce(dashSpeed * new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)));
-            timerDash = Random.Range(4, 8);
+            timerMitosis -= Time.deltaTime;
+            if (timerMitosis <= 0)
+            {
+                gc.splitJello(gameObject);
+                timerMitosis = Random.Range(10, 20);
+                rend.color = Color.white;
+            }
+            else if (timerMitosis < 5)
+            {
+                rend.color = new Color(1, rend.color.g - .2f * Time.deltaTime, rend.color.b - .2f * Time.deltaTime);
+            }
+            timerDash -= Time.deltaTime;
+            if (timerDash < 0)
+            {
+                rig.AddForce(dashSpeed * new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)));
+                timerDash = Random.Range(4, 8);
+            }
         }
     }
 
