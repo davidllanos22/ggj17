@@ -13,6 +13,9 @@ public class GameCamera : MonoBehaviour {
 	Vector2 gameWidth;
 	Vector2 delta;
 
+	Vector3 currentMiddlePos;
+	Vector3 currentDeltaPos;
+
 	List<GameObject> players;
 
 	public float cameraAngle = 45f;
@@ -33,6 +36,7 @@ public class GameCamera : MonoBehaviour {
 		Vector2 max = new Vector2 (Mathf.NegativeInfinity, Mathf.NegativeInfinity);
 
 		middlePos = Vector3.zero;
+		int c = 0;
 		for (int i = 0; i < players.Count; ++i) {
 
 			PlayerScript ps = players [i].GetComponentInChildren<PlayerScript> ();
@@ -43,7 +47,13 @@ public class GameCamera : MonoBehaviour {
 				max.x = Mathf.Max (max.x, players [i].transform.position.x + cameraMarginSides);
 				min.y = Mathf.Min (min.y, players [i].transform.position.z - cameraMarginSides);
 				max.y = Mathf.Max (max.y, players [i].transform.position.z + cameraMarginSides);
+				c++;
 			}
+		}
+
+		if (c == 0) { // No players left
+			min = new Vector2 (0, 0);
+			max = new Vector2 (gameWidth.x, gameWidth.y);
 		}
 
 		min.y = Mathf.Max (0f, min.y);
@@ -80,10 +90,11 @@ public class GameCamera : MonoBehaviour {
         if (r > 3) target = middle + r * new Vector3(0, delta.y / 4f, 0);
         else target = middle - new Vector3(0, delta.y / 4f, 0);*/
 
-        transform.position = middlePos + deltaPos;
-        transform.LookAt(middlePos);
-		//transform.rotation = Quaternion.AngleAxis (-cameraAngle, Vector3.left);
-        //TODO REBRE NOUS PLAYERS
+		currentMiddlePos = Vector3.Lerp (currentMiddlePos, middlePos, Time.deltaTime * 5f);
+		currentDeltaPos = Vector3.Lerp (currentDeltaPos, deltaPos, Time.deltaTime);
+
+		transform.position = currentMiddlePos + currentDeltaPos;
+		transform.LookAt(currentMiddlePos);
 	}
 
 	void OnDrawGizmos() {
