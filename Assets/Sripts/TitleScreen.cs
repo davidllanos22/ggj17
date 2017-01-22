@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TitleScreen : MonoBehaviour {
-	
+
+	public DataBetweenScenes data;
+
 	int readyPlayers;
 	float readyTime = 0;
 	int readyCount = 0;
@@ -55,8 +57,10 @@ public class TitleScreen : MonoBehaviour {
 			if (Input.GetAxis (axis + (i + 1).ToString ()) > 0.2f) {
 				++readyPlayers;
 				readies [i].sprite = onSprites[i];
+				data.playerPlaying [i] = true;
 			} else {
 				readies [i].sprite = offSprite;
+				data.playerPlaying [i] = false;
 			}
 		}
 		if (readyPlayers != readyCount) {

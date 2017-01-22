@@ -12,6 +12,8 @@ public class GameController : MonoBehaviour {
     public Scenery sceneryPrefab;
     public List<Sprite> badges;
 
+	public DataBetweenScenes data;
+
     public float wallHeight = 3f;
 
     GameCamera gameCamera;
@@ -33,7 +35,7 @@ public class GameController : MonoBehaviour {
     public UnityEngine.UI.Text simulationFPSText;
 
     int maxLives = 3;
-    float timer;
+	float timer = 0;
     public bool playing;
     public List<PlayerScript> playersEliminated;
     Vector3 playerOffset = new Vector3(5f,0f,3f);
@@ -76,18 +78,28 @@ public class GameController : MonoBehaviour {
         playerDeaths = new int[numPlayers];
         for (int i = 0; i < numPlayers; ++i)
         {
-            players[i] = ((GameObject)Instantiate(playerPrefab.gameObject)).GetComponent<PlayerScript>();
-            players[i].controller = this;
-            players[i].tileSize = visualWater.waterTileSize.x;
-            players[i].transform.SetParent(transform);
-            players[i].transform.position = jello.transform.position + new Vector3(((i%2 != 0) ? playerOffset.x : -playerOffset.x),0, ((i < 2) ? playerOffset.z : -playerOffset.z));
-            players[i].GetComponent<ImpulseSystem>().Init(visualWater.waterIntensityHeight, this, visualWater.width, visualWater.height);
-            players[i].playerId = i + 1;
-            players[i].gameObject.name = "player" + (i + 1).ToString();
+			players [i] = ((GameObject)Instantiate (playerPrefab.gameObject)).GetComponent<PlayerScript> ();
+			players [i].controller = this;
+			players [i].tileSize = visualWater.waterTileSize.x;
+			players [i].transform.SetParent (transform);
+			players [i].transform.position = jello.transform.position + new Vector3 (((i % 2 != 0) ? playerOffset.x : -playerOffset.x), 0, ((i < 2) ? playerOffset.z : -playerOffset.z));
+			players [i].GetComponent<ImpulseSystem> ().Init (visualWater.waterIntensityHeight, this, visualWater.width, visualWater.height);
+			players [i].playerId = i + 1;
+			players [i].gameObject.name = "player" + (i + 1).ToString ();
 
-            players[i].billboardRenderer.sprite = badges[i];
+			players [i].billboardRenderer.sprite = badges [i];
 
-            playerDeaths[i] = 0;
+			playerDeaths [i] = 0;
+
+
+			if (!data.playerPlaying [i]) {
+				playerDeaths [i] = 3;
+				players [i].gameOver = true;
+
+				players [i].gameObject.SetActive (false);
+
+				playersEliminated.Add(players[i]);
+			}
         }
 
         gameCamera = ((GameObject)Instantiate(cameraPrefab.gameObject)).GetComponent<GameCamera>();
@@ -97,7 +109,7 @@ public class GameController : MonoBehaviour {
         {
             cameraObjects.Add(players[i].gameObject);
         }
-        cameraObjects.Add(jello.gameObject);
+        //cameraObjects.Add(jello.gameObject);
     }
 
     void endGame()
@@ -107,7 +119,7 @@ public class GameController : MonoBehaviour {
             Debug.Log(playersEliminated[i].playerId);
         }*/
         playing = false;
-		UnityEngine.SceneManagement.SceneManager.LoadScene (0);
+
     }
 
     void GenerateWalls()
@@ -160,9 +172,14 @@ public class GameController : MonoBehaviour {
 			lastSimulationTime = currentTime;
 			visualWater.UpdateMesh ();
 		}
-        if (!playing && Input.GetKeyDown(KeyCode.R))
+        if (!playing)
         {
-            Application.LoadLevel(1);
+			timer += Time.deltaTime;
+
+			if (timer > 10f) {
+				UnityEngine.SceneManagement.SceneManager.LoadScene (0);
+				this.enabled = false;
+			}
         } 
     }
 
@@ -212,7 +229,7 @@ public class GameController : MonoBehaviour {
             rb = jello.GetComponent<Rigidbody>();
             rb.AddForce(-rd * 100);
 
-            cameraObjects.Add(jello.gameObject);
+            //cameraObjects.Add(jello.gameObject);
         }
     }
 

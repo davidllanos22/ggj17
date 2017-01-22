@@ -850,6 +850,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60b52ed8970234aa38b91510f9dcc230, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: 6df18f22248fd45ed8d94b31928210f7, type: 2}
   readies:
   - {fileID: 2023949449}
   - {fileID: 1345493580}

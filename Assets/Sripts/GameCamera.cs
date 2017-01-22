@@ -34,12 +34,15 @@ public class GameCamera : MonoBehaviour {
 
 		middlePos = Vector3.zero;
 		for (int i = 0; i < players.Count; ++i) {
-			middlePos += players[i].transform.position;
 
-			min.x = Mathf.Min (min.x, players [i].transform.position.x - cameraMarginSides);
-			max.x = Mathf.Max (max.x, players [i].transform.position.x + cameraMarginSides);
-			min.y = Mathf.Min (min.y, players [i].transform.position.z - cameraMarginSides);
-			max.y = Mathf.Max (max.y, players [i].transform.position.z + cameraMarginSides);
+			if (players [i].activeInHierarchy) {
+				middlePos += players [i].transform.position;
+
+				min.x = Mathf.Min (min.x, players [i].transform.position.x - cameraMarginSides);
+				max.x = Mathf.Max (max.x, players [i].transform.position.x + cameraMarginSides);
+				min.y = Mathf.Min (min.y, players [i].transform.position.z - cameraMarginSides);
+				max.y = Mathf.Max (max.y, players [i].transform.position.z + cameraMarginSides);
+			}
 		}
 
 		min.y = Mathf.Max (0f, min.y);
