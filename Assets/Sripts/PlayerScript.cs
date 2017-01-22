@@ -66,7 +66,7 @@ public class PlayerScript : MonoBehaviour
 	public GameObject livesHolder;
 
     float audioSwimTimer = 0f;
-    float audioSwimStep = .85f;
+    float audioSwimStep = .65f;
 
 
     // Use this for initialization
