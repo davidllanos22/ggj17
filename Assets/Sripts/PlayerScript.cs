@@ -57,6 +57,7 @@ public class PlayerScript : MonoBehaviour
     public AudioSource oneShotAudio;
     public AudioSource cutAudio;
     public AudioClip[] attackInterv;
+    public AudioClip[] chargeRand;
     public AudioClip[] swimRand;
     public AudioClip[] screams;
     public AudioClip drownAudio;
@@ -111,7 +112,16 @@ public class PlayerScript : MonoBehaviour
                 swimming = true;
             }
 
-            if (Input.GetButton(inputs[inputType, 3] + playerId))
+            if (Input.GetButtonDown(inputs[inputType, 3] + playerId))
+            {
+                int index = Random.Range(0, chargeRand.Length);
+                cutAudio.Stop();
+                cutAudio.clip = chargeRand[index];
+                cutAudio.Play();
+            }
+
+
+                if (Input.GetButton(inputs[inputType, 3] + playerId))
             {
                 potency = Mathf.Min(potency + Time.deltaTime * chargeSpeed, maxPotency);
                 charging = true;
