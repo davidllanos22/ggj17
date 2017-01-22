@@ -35,3 +35,5 @@ sysinfo.txt
 # Ignored data
 Assets/Local
 Assets/Local.meta
+
+*.DS_Store

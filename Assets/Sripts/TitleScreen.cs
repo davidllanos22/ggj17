@@ -7,7 +7,9 @@ public class TitleScreen : MonoBehaviour {
 	int readyPlayers;
 	float readyTime = 0;
 	int readyCount = 0;
-	public Animator[] readies;
+	public UnityEngine.UI.Image[] readies;
+	public Sprite offSprite;
+	public Sprite[] onSprites;
 
 	public float speed = 1f;
 	public float displacement = 10f;
@@ -52,9 +54,9 @@ public class TitleScreen : MonoBehaviour {
 		for (int i = 0; i < 4; ++i) {
 			if (Input.GetAxis (axis + (i + 1).ToString ()) > 0.2f) {
 				++readyPlayers;
-				readies [i].SetBool ("Ready", true);
+				readies [i].sprite = onSprites[i];
 			} else {
-				readies [i].SetBool ("Ready", false);
+				readies [i].sprite = offSprite;
 			}
 		}
 		if (readyPlayers != readyCount) {
