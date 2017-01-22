@@ -13,14 +13,14 @@ public class GameCamera : MonoBehaviour {
 	Vector2 gameWidth;
 	Vector2 delta;
 
-	GameObject[] players;
+	List<GameObject> players;
 
 	public float cameraAngle = 45f;
 
 	float ratio;
 	float wFOV;
 
-	public void Init(GameObject[] players, Vector2 gameWidth) {
+	public void Init(List<GameObject> players, Vector2 gameWidth) {
 		this.players = players;
 		this.gameWidth = gameWidth;
 		ratio = (float)Screen.width / (float)Screen.height;
@@ -33,7 +33,7 @@ public class GameCamera : MonoBehaviour {
 		Vector2 max = new Vector2 (Mathf.NegativeInfinity, Mathf.NegativeInfinity);
 
 		middlePos = Vector3.zero;
-		for (int i = 0; i < players.Length; ++i) {
+		for (int i = 0; i < players.Count; ++i) {
 			middlePos += players[i].transform.position;
 
 			min.x = Mathf.Min (min.x, players [i].transform.position.x - cameraMarginSides);
@@ -57,7 +57,7 @@ public class GameCamera : MonoBehaviour {
 		float r = delta.x / delta.y;
 
 		float hFov = Camera.main.fieldOfView / 2f;
-		float beta = 180 - cameraAngle - hFov;
+		//float beta = 180 - cameraAngle - hFov;
 
 
 		float distance = 0f;
@@ -72,9 +72,9 @@ public class GameCamera : MonoBehaviour {
 
 
         // Mou camera
-        Vector3 target;
+        /*Vector3 target;
         if (r > 3) target = middle + r * new Vector3(0, delta.y / 4f, 0);
-        else target = middle - new Vector3(0, delta.y / 4f, 0);
+        else target = middle - new Vector3(0, delta.y / 4f, 0);*/
 
         transform.position = middlePos + deltaPos;
         transform.LookAt(middlePos);

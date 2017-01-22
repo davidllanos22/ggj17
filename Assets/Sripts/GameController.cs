@@ -19,7 +19,10 @@ public class GameController : MonoBehaviour {
     WaterCPU waterCalculator;
 
     int numPlayers = 4;
+    int maxMedusas = 120;
+    int jellos = 1;
     PlayerScript[] players;
+    List<GameObject> cameraObjects;
     int[] playerDeaths;
     JelloScript jello;
 
@@ -62,17 +65,18 @@ public class GameController : MonoBehaviour {
         jello.transform.SetParent(transform);
         jello.transform.position = new Vector3(visualWater.width / 2 * visualWater.waterTileSize.x, 0, visualWater.height*.4f * visualWater.waterTileSize.z);
 		jello.GetComponent<ImpulseSystem>().Init(visualWater.waterIntensityHeight, this, visualWater.width, visualWater.height);
+        jello.gc = this;
 
         gameCamera = ((GameObject) Instantiate (cameraPrefab.gameObject)).GetComponent<GameCamera> ();
 
-		GameObject[] cameraFollowing = new GameObject[players.Length + 1];
+        cameraObjects = new List<GameObject>();
 		for (int i = 0; i < players.Length; ++i) {
-			cameraFollowing [i] = players [i].gameObject;
+			cameraObjects.Add(players[i].gameObject);
 		}
-		cameraFollowing [cameraFollowing.Length - 1] = jello.gameObject;
+		cameraObjects.Add(jello.gameObject);
 
 		Vector2 poolSize = new Vector2 (visualWater.width * visualWater.waterTileSize.x, visualWater.height * visualWater.waterTileSize.z);
-		gameCamera.Init (cameraFollowing, poolSize);
+		gameCamera.Init (cameraObjects, poolSize);
 		gameCamera.transform.SetParent (transform);
 		gameCamera.transform.position = transform.position + new Vector3 (visualWater.width / 2 * visualWater.waterTileSize.x, 0, visualWater.height / 2 * visualWater.waterTileSize.z);
 	
@@ -151,5 +155,27 @@ public class GameController : MonoBehaviour {
     public void waitRespawn(int id)
     {
         playerDeaths[id-1]++;
+    }
+
+    public void splitJello(GameObject jellOld)
+    {
+        if (jellos < maxMedusas)
+        {
+            jellos++;
+            jello = ((GameObject)Instantiate(jelloPrefab.gameObject)).GetComponent<JelloScript>();
+            jello.transform.SetParent(transform);
+            jello.transform.position = jellOld.transform.position;
+            jello.GetComponent<ImpulseSystem>().Init(visualWater.waterIntensityHeight, this, visualWater.width, visualWater.height);
+            jello.gc = this;
+
+            Vector3 rd = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f));
+
+            Rigidbody rb = jellOld.GetComponent<Rigidbody>();
+            rb.AddForce(rd * 100);
+            rb = jello.GetComponent<Rigidbody>();
+            rb.AddForce(-rd * 100);
+
+            cameraObjects.Add(jello.gameObject);
+        }
     }
 }

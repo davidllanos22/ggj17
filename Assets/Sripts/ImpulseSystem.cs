@@ -11,7 +11,6 @@ public class ImpulseSystem : MonoBehaviour {
     GameController gc;
 	int width, height;
 
-    float idealYPos = 0;
     float borderSeparation = .75f;
 
     Rigidbody rig;
