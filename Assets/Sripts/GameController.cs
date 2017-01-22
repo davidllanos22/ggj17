@@ -73,7 +73,7 @@ public class GameController : MonoBehaviour {
             players[i].controller = this;
             players[i].tileSize = visualWater.waterTileSize.x;
             players[i].transform.SetParent(transform);
-            players[i].transform.position = new Vector3(visualWater.width / 2 * visualWater.waterTileSize.x + 3 * i - 10, 0, visualWater.height / 2 * visualWater.waterTileSize.z);
+            players[i].transform.position = new Vector3(visualWater.width / 2 * visualWater.waterTileSize.x + 3 * i - 5, 0, visualWater.height / 2 * visualWater.waterTileSize.z);
             players[i].GetComponent<ImpulseSystem>().Init(visualWater.waterIntensityHeight, this, visualWater.width, visualWater.height);
             players[i].playerId = i + 1;
             players[i].gameObject.name = "player" + (i + 1).ToString();

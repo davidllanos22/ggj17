@@ -367,6 +367,7 @@ MonoBehaviour:
   controller: {fileID: 0}
   playerId: 0
   iFrames: 0
+  gameOver: 0
   anim: {fileID: 95327075027769054}
   billboardRenderer: {fileID: 212954746359922712}
   oneShotAudio: {fileID: 82188830850236490}
@@ -379,9 +380,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 0f54033acf035274db1a1e4df0e6c90e, type: 3}
   - {fileID: 8300000, guid: 8659eed1ae8aba24c8edea11d3b2c37c, type: 3}
   screams:
+  - {fileID: 8300000, guid: 48c03cc64eea57c47bf986234977e617, type: 3}
   - {fileID: 8300000, guid: c701ddf8567ad524bbb8a3add24872a7, type: 3}
   - {fileID: 8300000, guid: 4cc814a9690278b438e323b15bc10781, type: 3}
-  - {fileID: 8300000, guid: 48c03cc64eea57c47bf986234977e617, type: 3}
   drownAudio: {fileID: 8300000, guid: b63dc45993ae194408458a62abaf9e31, type: 3}
 --- !u!136 &136751229290885940
 CapsuleCollider:
