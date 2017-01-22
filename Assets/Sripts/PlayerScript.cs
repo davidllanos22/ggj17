@@ -7,8 +7,8 @@ public class PlayerScript : MonoBehaviour
 
     string[,] inputs = new string[,]
     {
-        {"Horizontal", "Vertical", "A", "X" },
-        {"Horiz", "Vert", "Swim", "Charge" }
+        {"Horizontal", "Vertical", "A", "X", "B" },
+        {"Horiz", "Vert", "Swim", "Charge", "Scream" }
     };
 
     Rigidbody rb;
@@ -47,6 +47,18 @@ public class PlayerScript : MonoBehaviour
     public Animator anim;
 	public SpriteRenderer billboardRenderer;
 
+
+    public AudioSource oneShotAudio;
+    public AudioSource cutAudio;
+    public AudioClip[] attackInterv;
+    public AudioClip[] swimRand;
+    public AudioClip[] screams;
+    public AudioClip drownAudio;
+
+    float audioSwimTimer = 0f;
+    float audioSwimStep = .85f;
+
+
     // Use this for initialization
     void Start()
     {
@@ -64,6 +76,8 @@ public class PlayerScript : MonoBehaviour
             Vector3 charDir = new Vector3(Input.GetAxis(inputs[inputType, 0] + playerId), 0, Input.GetAxis(inputs[inputType, 1] + playerId));
             if (charDir.magnitude > 0.2f) lookDir = new Vector3(charDir.normalized.x, 0, charDir.normalized.z);
             if (timer > 0) timer -= Time.deltaTime;
+            if (audioSwimTimer > 0) audioSwimTimer -= Time.deltaTime;
+
             bool swimming = false;
             bool charging = false;
             if (Input.GetAxis(inputs[inputType, 2] + playerId) > .1f)
@@ -73,6 +87,14 @@ public class PlayerScript : MonoBehaviour
                 {
                     controller.AddWave(transform.position - lookDir * (.3f + ((lookDir.z > 0) ? 0 : 1f)) * tileSize, -new Vector2(lookDir.x, lookDir.z) * waveHeight);
                     timer = stepWave;
+                }
+
+                if(audioSwimTimer <= 0)
+                {
+                    //SwimAudio
+                    int index = Random.Range(0, swimRand.Length);
+                    oneShotAudio.PlayOneShot(swimRand[index]);
+                    audioSwimTimer = audioSwimStep;
                 }
 
                 swimming = true;
@@ -88,7 +110,21 @@ public class PlayerScript : MonoBehaviour
             {
                 controller.AddWave(transform.position + lookDir * (.3f + ((lookDir.z < 0) ? 0 : .3f)) * tileSize, new Vector2(lookDir.x, lookDir.z) * waveHeight * potency * attackMultiplyer);
                 rb.AddForce(Time.deltaTime * -lookDir * 4f * speed * potency);
+                
+                //AttackAudio
+                int index = Mathf.FloorToInt((potency / maxPotency) * (attackInterv.Length-.1f));
+                oneShotAudio.PlayOneShot(attackInterv[index]);
+
                 potency = 0;
+            }
+
+            //Scream audio
+            if(Input.GetButtonDown(inputs[inputType,4] + playerId))
+            {
+                int index = Random.Range(0,screams.Length);
+                cutAudio.Stop();
+                cutAudio.clip = screams[index];
+                cutAudio.Play();
             }
 
             SetAnimations(lookDir.x, lookDir.z, swimming, charging);
@@ -162,6 +198,9 @@ public class PlayerScript : MonoBehaviour
             anim.SetBool("Alive", alive);
             lookDir = -Vector3.forward;
             imp.SetAlive(false);
+
+            //Drown Audio
+            oneShotAudio.PlayOneShot(drownAudio);
 
         }
     }

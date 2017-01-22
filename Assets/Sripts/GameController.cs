@@ -19,7 +19,7 @@ public class GameController : MonoBehaviour {
     WaterCPU waterCalculator;
 
     int numPlayers = 4;
-    int maxMedusas = 120;
+    int maxMedusas = 180;
     int jellos = 1;
     PlayerScript[] players;
     List<GameObject> cameraObjects;
@@ -211,5 +211,10 @@ public class GameController : MonoBehaviour {
 
             cameraObjects.Add(jello.gameObject);
         }
+    }
+
+    public bool stillMoreJellos()
+    {
+        return jellos < maxMedusas;
     }
 }
