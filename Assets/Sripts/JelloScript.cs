@@ -15,7 +15,6 @@ public class JelloScript : MonoBehaviour {
     float dashSpeed = 300f;
 
     public AudioSource oneShotAudio;
-    public AudioSource cutAudio;
 
     // Use this for initialization
     void Start () {
