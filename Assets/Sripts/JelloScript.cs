@@ -16,6 +16,7 @@ public class JelloScript : MonoBehaviour
     float dashSpeed = 400f;
 
     public AudioSource oneShotAudio;
+    public AudioClip[] mitosis;
 
     // Use this for initialization
     void Start()
@@ -55,7 +56,8 @@ public class JelloScript : MonoBehaviour
             rend.color = Color.white;
 
             //MitosisAudio
-            oneShotAudio.PlayOneShot(oneShotAudio.clip);
+            int index = Random.Range(0, mitosis.Length);
+            oneShotAudio.PlayOneShot(mitosis[index]);
         }
         else if (timerMitosis < 5)
         {

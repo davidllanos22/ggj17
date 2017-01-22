@@ -635,17 +635,29 @@ MonoBehaviour:
   oneShotAudio: {fileID: 82188830850236490}
   cutAudio: {fileID: 82128330416683896}
   attackInterv:
-  - {fileID: 8300000, guid: 1eafb506b68a0ef408faee6a1841ee4e, type: 3}
-  - {fileID: 8300000, guid: 9e237d128a915ed42842fde251df6961, type: 3}
-  - {fileID: 8300000, guid: faebea0b60333cc429d548fec8980a6f, type: 3}
+  - {fileID: 8300000, guid: 5d35c92d4a9084380884bddbca90872f, type: 3}
+  - {fileID: 8300000, guid: 1b04c4b2e715647a381866dccddf0f41, type: 3}
+  - {fileID: 8300000, guid: 3b21af7b20b7044b1bf51c7a1a38ed82, type: 3}
+  chargeRand:
+  - {fileID: 8300000, guid: e6ce46a78335b4c8fa54766a65be446d, type: 3}
+  - {fileID: 8300000, guid: 2ee3b5185cc634a56a87daee1f69092b, type: 3}
+  - {fileID: 8300000, guid: feb3a71690b054df385fd4443d3ff2f3, type: 3}
   swimRand:
-  - {fileID: 8300000, guid: 0f54033acf035274db1a1e4df0e6c90e, type: 3}
-  - {fileID: 8300000, guid: 8659eed1ae8aba24c8edea11d3b2c37c, type: 3}
+  - {fileID: 8300000, guid: 5d35c92d4a9084380884bddbca90872f, type: 3}
+  - {fileID: 8300000, guid: 1b04c4b2e715647a381866dccddf0f41, type: 3}
+  - {fileID: 8300000, guid: 3b21af7b20b7044b1bf51c7a1a38ed82, type: 3}
   screams:
-  - {fileID: 8300000, guid: 48c03cc64eea57c47bf986234977e617, type: 3}
-  - {fileID: 8300000, guid: c701ddf8567ad524bbb8a3add24872a7, type: 3}
-  - {fileID: 8300000, guid: 4cc814a9690278b438e323b15bc10781, type: 3}
-  drownAudio: {fileID: 8300000, guid: b63dc45993ae194408458a62abaf9e31, type: 3}
+  - {fileID: 8300000, guid: 8227b0f9c30dc4e3b9a441a963b3ee6d, type: 3}
+  - {fileID: 8300000, guid: e8a635feffb354f80967a2b21f727a01, type: 3}
+  - {fileID: 8300000, guid: 371367846212b4c988376469b6fdd012, type: 3}
+  - {fileID: 8300000, guid: 348a8b1ebf6f5489991f2ab87e8890f8, type: 3}
+  - {fileID: 8300000, guid: ec386ab7c64c1443d8a9c82ce46bfe5b, type: 3}
+  - {fileID: 8300000, guid: 051addf1beaa3457fb5507f7703ba0b8, type: 3}
+  - {fileID: 8300000, guid: 7a9011d34b5c64897b00d7c986c470fe, type: 3}
+  - {fileID: 8300000, guid: 740391fa43de242f3a8ca19e72544bf2, type: 3}
+  - {fileID: 8300000, guid: b7ced20199d8349e6bacfb44f5a41d23, type: 3}
+  - {fileID: 8300000, guid: 7f4cf4ddcf76f48b1890ee5eea46f4a1, type: 3}
+  drownAudio: {fileID: 8300000, guid: 3b22e6f92ef8243d6aad1b571929a32c, type: 3}
   lives:
   - {fileID: 95143573932272300}
   - {fileID: 95959960535332046}
