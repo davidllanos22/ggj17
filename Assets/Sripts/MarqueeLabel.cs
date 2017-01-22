@@ -12,7 +12,7 @@ public class MarqueeLabel : MonoBehaviour
     public Text label;
     private Text labelClone = null;
 
-    private const float FREEZE_TIME = 5.0f; // In seconds
+    private const float FREEZE_TIME = 0.0f; // In seconds
     private const float LABEL_SPEED = 70.0f; // In pixels per second
     private const float LABEL_MARGIN = 40.0f; // In pixels
 
@@ -48,8 +48,11 @@ public class MarqueeLabel : MonoBehaviour
     void Awake()
     {
         //Forces always first time
-        label.text = null;
-        TextToShow = initialTextToShow;
+		if (initialTextToShow.Length == 0) {
+			TextToShow = label.text;
+		} else {
+			TextToShow = initialTextToShow;
+		}
     }
 
     void Start ()
