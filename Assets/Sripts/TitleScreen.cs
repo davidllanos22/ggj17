@@ -16,6 +16,9 @@ public class TitleScreen : MonoBehaviour {
 	public float height = 1f;
 	public float period = 2f;
 
+	public Sprite[] count;
+	public UnityEngine.UI.Image countdown;
+
 	float time = 0f;
 	float baseY = 0f;
 
@@ -69,6 +72,14 @@ public class TitleScreen : MonoBehaviour {
 			readyTime += Time.deltaTime;
 		} else {
 			readyTime = 0;
+		}
+
+		if (readyTime == 0) {
+			countdown.enabled = false;
+		} else {
+			countdown.enabled = true;
+			int c = Mathf.Clamp(Mathf.FloorToInt (3f - readyTime), 0, count.Length);
+			countdown.sprite = count [c];
 		}
 
 		readyCount = readyPlayers;
