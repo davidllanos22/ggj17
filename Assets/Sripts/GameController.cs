@@ -101,10 +101,10 @@ public class GameController : MonoBehaviour {
 
     void endGame()
     {
-        for (int i = 0; i < playersEliminated.Count; ++i)
+        /*for (int i = 0; i < playersEliminated.Count; ++i)
         {
             Debug.Log(playersEliminated[i].playerId);
-        }
+        }*/
         playing = false;
     }
 

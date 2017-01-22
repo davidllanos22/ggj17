@@ -11,6 +11,9 @@ public class PlayerScript : MonoBehaviour
         {"Horiz", "Vert", "Swim", "Charge", "Scream" }
     };
 
+    public GameObject sprite;
+    Vector3 offset;
+
     Rigidbody rb;
     float maxSpeed = 100f;
     float speed = 5000f;
@@ -66,6 +69,7 @@ public class PlayerScript : MonoBehaviour
         rend = GetComponentInChildren<SpriteRenderer>();
         lookDir = -Vector3.forward;
         imp = GetComponent<ImpulseSystem>();
+        offset = sprite.transform.localPosition;
     }
 
     // Update is called once per frame
@@ -104,6 +108,7 @@ public class PlayerScript : MonoBehaviour
             {
                 potency = Mathf.Min(potency + Time.deltaTime * chargeSpeed, maxPotency);
                 charging = true;
+                sprite.transform.localPosition = offset + new Vector3(Random.Range(-.05f, .05f), Random.Range(-.05f, .05f), 0) * potency/maxPotency;
                 if (potency < maxPotency) rend.color = new Color(rend.color.r, rend.color.g - .3f *Time.deltaTime * maxPotency / chargeSpeed, rend.color.b - Time.deltaTime * maxPotency / chargeSpeed);
             }
 
@@ -118,6 +123,7 @@ public class PlayerScript : MonoBehaviour
 
                 potency = 0;
 
+                sprite.transform.localPosition = offset;
                 rend.color = Color.white;
             }
 
