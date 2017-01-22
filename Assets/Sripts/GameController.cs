@@ -161,7 +161,7 @@ public class GameController : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-		if (waterCalculator.IsDirty () && playing) {
+		if (waterCalculator.IsDirty ()) {
 			float currentTime = Time.unscaledTime;
 			float step = currentTime - lastSimulationTime;
 			simulationFPS = 0.9f * simulationFPS + 0.1f * (1f / step);
