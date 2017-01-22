@@ -12,7 +12,7 @@ public class JelloScript : MonoBehaviour {
 
     float timerMitosis;
     float timerDash;
-    float dashSpeed = 300f;
+    float dashSpeed = 400f;
 
     public AudioSource oneShotAudio;
 
@@ -21,8 +21,8 @@ public class JelloScript : MonoBehaviour {
         rig = GetComponent<Rigidbody>();
         rend = GetComponentInChildren<SpriteRenderer>();
 
-        timerMitosis = Random.Range(10f, 25f);
-        timerDash = Random.Range(4f, 8f);
+        timerMitosis = Random.Range(8f, 20f);
+        timerDash = Random.Range(3f, 6f);
     }
 
     // Update is called once per frame
@@ -32,7 +32,7 @@ public class JelloScript : MonoBehaviour {
         if (timerDash < 0)
         {
             rig.AddForce(dashSpeed * new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)));
-            timerDash = Random.Range(4f, 8f);
+            timerDash = Random.Range(3f, 6f);
         }
 
         SetAnimations(rig.velocity.x, rig.velocity.z);
@@ -47,7 +47,7 @@ public class JelloScript : MonoBehaviour {
         if (timerMitosis <= 0)
         {
             gc.splitJello(gameObject);
-            timerMitosis = Random.Range(10f, 25f);
+            timerMitosis = Random.Range(8f, 20f);
             rend.color = Color.white;
 
             //MitosisAudio
