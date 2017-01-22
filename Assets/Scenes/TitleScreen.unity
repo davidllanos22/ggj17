@@ -339,9 +339,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "        Ferran Bertomeu @fonserbc    Sergi Cebri\xE1n @sexyytomato    Nico
-    Delgado @nico_codrilo    David LLanos @davidllanos22    Jordi Serra @turmixs       No
-    Jellyfish Were Harmed in the Making of This Game"
+  m_Text: "        GGJ17@GameJamBCN    Ferran Bertomeu @fonserbc    Sergi Cebri\xE1n
+    @sexyytomato    Nico Delgado @nico_codrilo    David LLanos @davidllanos22    Jordi
+    Serra @turmixs       No Jellyfish Were Harmed in the Making of This Game"
 --- !u!222 &914447447
 CanvasRenderer:
   m_ObjectHideFlags: 0
