@@ -14,36 +14,52 @@ public class JelloScript : MonoBehaviour {
     float timerDash;
     float dashSpeed = 300f;
 
+    public AudioSource oneShotAudio;
+    public AudioSource cutAudio;
+
     // Use this for initialization
     void Start () {
         rig = GetComponent<Rigidbody>();
         rend = GetComponentInChildren<SpriteRenderer>();
 
-        timerMitosis = Random.Range(10, 20);
-        timerDash = Random.Range(4, 8);
+        timerMitosis = Random.Range(10f, 25f);
+        timerDash = Random.Range(4f, 8f);
     }
 
     // Update is called once per frame
     void Update () {
+
+        timerDash -= Time.deltaTime;
+        if (timerDash < 0)
+        {
+            rig.AddForce(dashSpeed * new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)));
+            timerDash = Random.Range(4f, 8f);
+        }
+
         SetAnimations(rig.velocity.x, rig.velocity.z);
+
+        if (!gc.stillMoreJellos())
+        {
+            if (rend.color != Color.white) rend.color = Color.white;
+            return;
+        }
 
         timerMitosis -= Time.deltaTime;
         if (timerMitosis <= 0)
         {
             gc.splitJello(gameObject);
-            timerMitosis = Random.Range(10, 20);
+            timerMitosis = Random.Range(10f, 25f);
             rend.color = Color.white;
+
+            //MitosisAudio
+            oneShotAudio.PlayOneShot(oneShotAudio.clip);
         }
         else if (timerMitosis < 5)
         {
             rend.color = new Color(1, rend.color.g - .2f * Time.deltaTime, rend.color.b - .2f * Time.deltaTime);
         }
-        timerDash -= Time.deltaTime;
-        if (timerDash < 0)
-        {
-            rig.AddForce(dashSpeed * new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)));
-            timerDash = Random.Range(4, 8);
-        }
+
+
     }
 
     void SetAnimations(float xAxis, float yAxis)
