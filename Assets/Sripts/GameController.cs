@@ -36,6 +36,7 @@ public class GameController : MonoBehaviour {
     float timer;
     public bool playing;
     public List<PlayerScript> playersEliminated;
+    Vector3 playerOffset = new Vector3(5f,0f,3f);
 
     // Use this for initialization
     void Awake() {
@@ -65,6 +66,12 @@ public class GameController : MonoBehaviour {
     {
         playing = true;
 
+        jello = ((GameObject)Instantiate(jelloPrefab.gameObject)).GetComponent<JelloScript>();
+        jello.transform.SetParent(transform);
+        jello.transform.position = new Vector3(visualWater.width / 2 * visualWater.waterTileSize.x, 0, visualWater.height * .5f * visualWater.waterTileSize.z);
+        jello.GetComponent<ImpulseSystem>().Init(visualWater.waterIntensityHeight, this, visualWater.width, visualWater.height);
+        jello.gc = this;
+
         players = new PlayerScript[numPlayers];
         playerDeaths = new int[numPlayers];
         for (int i = 0; i < numPlayers; ++i)
@@ -73,7 +80,7 @@ public class GameController : MonoBehaviour {
             players[i].controller = this;
             players[i].tileSize = visualWater.waterTileSize.x;
             players[i].transform.SetParent(transform);
-            players[i].transform.position = new Vector3(visualWater.width / 2 * visualWater.waterTileSize.x + 3 * i - 5, 0, visualWater.height / 2 * visualWater.waterTileSize.z);
+            players[i].transform.position = jello.transform.position + new Vector3(((i%2 != 0) ? playerOffset.x : -playerOffset.x),0, ((i < 2) ? playerOffset.z : -playerOffset.z));
             players[i].GetComponent<ImpulseSystem>().Init(visualWater.waterIntensityHeight, this, visualWater.width, visualWater.height);
             players[i].playerId = i + 1;
             players[i].gameObject.name = "player" + (i + 1).ToString();
@@ -82,12 +89,6 @@ public class GameController : MonoBehaviour {
 
             playerDeaths[i] = 0;
         }
-
-        jello = ((GameObject)Instantiate(jelloPrefab.gameObject)).GetComponent<JelloScript>();
-        jello.transform.SetParent(transform);
-        jello.transform.position = new Vector3(visualWater.width / 2 * visualWater.waterTileSize.x, 0, visualWater.height * .4f * visualWater.waterTileSize.z);
-        jello.GetComponent<ImpulseSystem>().Init(visualWater.waterIntensityHeight, this, visualWater.width, visualWater.height);
-        jello.gc = this;
 
         gameCamera = ((GameObject)Instantiate(cameraPrefab.gameObject)).GetComponent<GameCamera>();
 
