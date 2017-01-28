@@ -25,8 +25,6 @@ public class WaterCPU : MonoBehaviour {
     List<WaveInfo> wavesToAdd;
     List<WaveInfo> reboundsToAdd;
 
-    private System.Threading.Thread waveProc;
-
     class WaveInfo {
         public int i, j, k;
         public float power;
@@ -112,19 +110,19 @@ public class WaterCPU : MonoBehaviour {
                 }
             }
         }
-        waveProc = new System.Threading.Thread(() => Waves());
-        waveProc.Start();
+        StartCoroutine(Waves());
 		lastStepTime = Time.realtimeSinceStartup;
 	}
 
-    void Waves()
+    IEnumerator Waves()
     {
         while (running)
         {
             SimulateWater();
-            while (!doStep && running) { }
+            while (!doStep && running) {
+                yield return null;
+            }
             doStep = false;
-
         }
     }
 	
@@ -138,6 +136,8 @@ public class WaterCPU : MonoBehaviour {
         xCols[2] = false;
         yCols[2] = false;
 
+        int operationCount = 0;
+
         for (int i = 0; i < width; ++i)
         {
             for (int j = 0; j < height; ++j)
@@ -149,7 +149,8 @@ public class WaterCPU : MonoBehaviour {
 
                 for (int k = 0; k < 9; ++k)
                 {
-                    if(k == 0)
+                    operationCount++;
+                    if (k == 0)
                     {
                         if (oldPool[i, j, k] < 0) newPool[i, j, k] = 0;
                         else newPool[i, j, k] = oldPool[i, j, k] * -.5f;
@@ -181,6 +182,7 @@ public class WaterCPU : MonoBehaviour {
 
                     for (int t = 0; t < 5; ++t)
                     {
+                        operationCount++;
                         int tt = dirspawns[k,t];
                         int x = i+ dirvalues[tt, 0];
                         int y = j+ dirvalues[tt, 1];                        
@@ -197,6 +199,7 @@ public class WaterCPU : MonoBehaviour {
 
         foreach (WaveInfo wi in reboundsToAdd)
         {
+            operationCount++;
             newPool[wi.i, wi.j, wi.k] += wi.power;
             newPool[wi.i, wi.j, 0] = Mathf.Clamp(newPool[wi.i, wi.j, 0] + oldPool[wi.i, wi.j, wi.k], poolmin, poolmax);
         }
@@ -212,6 +215,7 @@ public class WaterCPU : MonoBehaviour {
                     Vector2 dirSum = Vector2.zero;
                     for (int k = 1; k < 9; ++k)
                     {
+                        operationCount++;
                         Vector2 dir = new Vector2(dirvalues[k, 0], dirvalues[k, 1]);
                         dirSum += dir.normalized*newPool[i, j, k];
                     }
@@ -222,7 +226,7 @@ public class WaterCPU : MonoBehaviour {
 			isDirty = true;
         }
 
-
+        //Debug.Log("Water took " + operationCount + " iterations");
         usePool1 = !usePool1;
     }
 
@@ -272,8 +276,8 @@ public class WaterCPU : MonoBehaviour {
 			isDirty = false;
         }
 	}
-    
 
+    int frameCount = 0;
     void Update()
     {
         /*if(Input.GetKeyDown(KeyCode.C))
@@ -282,8 +286,13 @@ public class WaterCPU : MonoBehaviour {
             Vector2 wave = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
             AddWave(pos, wave.normalized*Random.Range(10f,30f));
         }*/
+        frameCount++;
 
-		if (Time.realtimeSinceStartup - lastStepTime > 1f / stepsPerSecond) {
+        if (Time.realtimeSinceStartup - lastStepTime > 1f / stepsPerSecond) {
+
+            //Debug.Log(frameCount + " frames between simulation");
+            frameCount = 0;
+
 			doStep = true;
 			lastStepTime = Time.realtimeSinceStartup;
 		}

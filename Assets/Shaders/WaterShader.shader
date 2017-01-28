@@ -2,10 +2,8 @@
 {
 	Properties
 	{
-		_MainTex ("Texture", 2D) = "white" {}
-		_DelayTex ("Delay", 2D) = "white" {}
-		_DetailTex ("Detail", 2D) = "white" {}
-
+		_MainTex ("Delay", 2D) = "white" {}
+		_WaterColor ("Water Color", Color) = (1,1,1,1)
 	}
 	SubShader
 	{
@@ -44,7 +42,6 @@
 			};
 
 			sampler2D _MainTex;
-			sampler2D _DelayTex;
 			float4 _MainTex_ST;
 			
 			v2f vert (appdata v)
@@ -56,12 +53,14 @@
 				UNITY_TRANSFER_FOG(o,o.vertex);
 				return o;
 			}
-			
+
+			fixed4 _WaterColor;
+
 			fixed4 frag (v2f i) : SV_Target
 			{
 				// sample the texture
-				fixed4 col = tex2D(_MainTex, i.uv);
-				fixed delay = tex2D(_DelayTex, i.uv).r;
+				fixed4 col = _WaterColor;
+				fixed delay = tex2D(_MainTex, i.uv).r;
 				float h = i.h + 1;
 				h = ceil(h * 8)/8;
 
