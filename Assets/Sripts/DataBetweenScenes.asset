@@ -12,3 +12,5 @@ MonoBehaviour:
   m_Name: DataBetweenScenes
   m_EditorClassIdentifier: 
   playerPlaying: 01010101
+  playerControllerIds: 01000000020000000100000002000000
+  playerInputTypes: 01000000020000000200000001000000

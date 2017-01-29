@@ -1446,6 +1446,22 @@ InputManager:
     axis: 0
     joyNum: 1
   - serializedVersion: 3
+    m_Name: KHoriz1
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: left
+    positiveButton: right
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 3
+    dead: 0.001
+    sensitivity: 3
+    snap: 1
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 0
+  - serializedVersion: 3
     m_Name: Horiz2
     descriptiveName: 
     descriptiveNegativeName: 
@@ -1476,6 +1492,22 @@ InputManager:
     invert: 0
     type: 2
     axis: 2
+    joyNum: 1
+  - serializedVersion: 3
+    m_Name: KHoriz2
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: a
+    positiveButton: d
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 3
+    dead: 0.001
+    sensitivity: 3
+    snap: 1
+    invert: 0
+    type: 0
+    axis: 0
     joyNum: 1
   - serializedVersion: 3
     m_Name: Horiz3
@@ -1574,6 +1606,22 @@ InputManager:
     axis: 1
     joyNum: 1
   - serializedVersion: 3
+    m_Name: KVert1
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: down
+    positiveButton: up
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 3
+    dead: 0.001
+    sensitivity: 3
+    snap: 1
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 0
+  - serializedVersion: 3
     m_Name: Vert2
     descriptiveName: 
     descriptiveNegativeName: 
@@ -1605,6 +1653,22 @@ InputManager:
     type: 2
     axis: 3
     joyNum: 1
+  - serializedVersion: 3
+    m_Name: KVert2
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: s
+    positiveButton: w
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 3
+    dead: 0.001
+    sensitivity: 3
+    snap: 1
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 0
   - serializedVersion: 3
     m_Name: Vert3
     descriptiveName: 
@@ -1702,6 +1766,22 @@ InputManager:
     axis: 0
     joyNum: 0
   - serializedVersion: 3
+    m_Name: KCharge1
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: o
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 1000
+    dead: 0.001
+    sensitivity: 1000
+    snap: 0
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 0
+  - serializedVersion: 3
     m_Name: Charge2
     descriptiveName: 
     descriptiveNegativeName: 
@@ -1723,6 +1803,22 @@ InputManager:
     descriptiveNegativeName: 
     negativeButton: 
     positiveButton: joystick 1 button 14
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 1000
+    dead: 0.001
+    sensitivity: 1000
+    snap: 0
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: KCharge2
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: v
     altNegativeButton: 
     altPositiveButton: 
     gravity: 1000
@@ -1830,6 +1926,22 @@ InputManager:
     axis: 4
     joyNum: 1
   - serializedVersion: 3
+    m_Name: KSwim1
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: i
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 1000
+    dead: 0.001
+    sensitivity: 1000
+    snap: 0
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 0
+  - serializedVersion: 3
     m_Name: Swim2
     descriptiveName: 
     descriptiveNegativeName: 
@@ -1861,6 +1973,22 @@ InputManager:
     type: 2
     axis: 5
     joyNum: 1
+  - serializedVersion: 3
+    m_Name: KSwim2
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: b
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 1000
+    dead: 0.001
+    sensitivity: 1000
+    snap: 0
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 0
   - serializedVersion: 3
     m_Name: Swim3
     descriptiveName: 
@@ -1958,6 +2086,22 @@ InputManager:
     axis: 0
     joyNum: 0
   - serializedVersion: 3
+    m_Name: KScream1
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: p
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 1000
+    dead: 0.001
+    sensitivity: 1000
+    snap: 0
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 0
+  - serializedVersion: 3
     m_Name: Scream2
     descriptiveName: 
     descriptiveNegativeName: 
@@ -1974,11 +2118,11 @@ InputManager:
     axis: 0
     joyNum: 0
   - serializedVersion: 3
-    m_Name: MScream2
+    m_Name: KScream2
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: joystick 1 button 12
+    positiveButton: c
     altNegativeButton: 
     altPositiveButton: 
     gravity: 1000

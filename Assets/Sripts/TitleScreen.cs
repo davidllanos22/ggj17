@@ -50,21 +50,74 @@ public class TitleScreen : MonoBehaviour {
 		string axis = "MSwim";
 		#else
 		string axis = "Swim";
-		#endif
+        #endif
+        string Kaxis = "KSwim";
+        readyPlayers = 0;
 
+        for (int i = 0; i < 4; ++i)
+        {
+            if (!data.playerPlaying[i]) continue;
+            if(data.playerInputTypes[i] == 1)
+                data.playerPlaying[i] = (Input.GetAxis(axis + data.playerControllerIds[i].ToString()) > 0.2f);
+            else
+                data.playerPlaying[i] = (Input.GetAxis(Kaxis + data.playerControllerIds[i].ToString()) > 0.2f);
+        }
 
-		readyPlayers = 0;
-		for (int i = 0; i < 4; ++i) {
+        for (int i = 0; i < 4; ++i)
+        {
+            if (!data.playerPlaying[i]) readyAnim[i].SetBool("pressed", false);
+            else ++readyPlayers;
+        }
+
+        for (int i = 0; i < 4 && readyPlayers < 4; ++i) {
 			if (Input.GetAxis (axis + (i + 1).ToString ()) > 0.2f) {
-				++readyPlayers;
-				readyAnim [i].SetBool ("pressed", true);
-				data.playerPlaying [i] = true;
-			} else {
-				readyAnim [i].SetBool ("pressed", false);
-				data.playerPlaying [i] = false;
-			}
+                int position = -1;
+                for (int j = 3; j >= 0; --j)
+                {
+                    if(data.playerPlaying[j] && data.playerControllerIds[j] == (i+1) && data.playerInputTypes[j] == 1)
+                    {
+                        position = -1;
+                        break;
+                    }
+                    if (!data.playerPlaying[j]) position = j;
+                }
+                if (position != -1)
+                {
+                    ++readyPlayers;
+                    readyAnim[position].SetBool("pressed", true);
+                    data.playerPlaying[position] = true;
+                    data.playerControllerIds[position] = i+1;
+                    data.playerInputTypes[position] = 1;
+                }
+            }
 		}
-		if (readyPlayers != readyCount) {
+
+        for (int i = 0; i < 2 && readyPlayers < 4; ++i)
+        {
+            if (Input.GetAxis(Kaxis + (i + 1).ToString()) > 0.2f)
+            {
+                int position = -1;
+                for (int j = 3; j >= 0; --j)
+                {
+                    if (data.playerPlaying[j] && data.playerControllerIds[j] == (i + 1) && data.playerInputTypes[j] == 2)
+                    {
+                        position = -1;
+                        break;
+                    }
+                    if (!data.playerPlaying[j]) position = j;
+                }
+                if (position != -1)
+                {
+                    ++readyPlayers;
+                    readyAnim[position].SetBool("pressed", true);
+                    data.playerPlaying[position] = true;
+                    data.playerControllerIds[position] = i + 1;
+                    data.playerInputTypes[position] = 2;
+                }
+            }
+        }
+
+        if (readyPlayers != readyCount) {
 			readyTime = 0f;
 		}
 
@@ -85,7 +138,7 @@ public class TitleScreen : MonoBehaviour {
 		readyCount = readyPlayers;
 			
 
-		if (readyTime >= 3f || Input.GetKeyDown (KeyCode.Space)) {
+		if (readyTime >= 3f /*|| Input.GetKeyDown (KeyCode.Space)*/) {
 			UnityEngine.SceneManagement.SceneManager.LoadScene (1);
 			this.enabled = false;
 		}

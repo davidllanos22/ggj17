@@ -85,7 +85,10 @@ public class GameController : MonoBehaviour {
 			players [i].transform.position = jello.transform.position + new Vector3 (((i % 2 != 0) ? playerOffset.x : -playerOffset.x), 0, ((i < 2) ? playerOffset.z : -playerOffset.z));
 			players [i].GetComponent<ImpulseSystem> ().Init (visualWater.waterIntensityHeight, this, visualWater.width, visualWater.height);
 			players [i].playerId = i + 1;
-			players [i].gameObject.name = "player" + (i + 1).ToString ();
+            players[i].controllerId = data.playerControllerIds[i];
+            players[i].inputType = data.playerInputTypes[i];
+
+            players[i].gameObject.name = "player" + (i + 1).ToString ();
 
 			players [i].billboardRenderer.sprite = badges [i];
 

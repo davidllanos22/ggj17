@@ -8,10 +8,11 @@ public class PlayerScript : MonoBehaviour
     {
         {"Horizontal", "Vertical", "A", "X", "B" },
 	#if (UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX)
-		{"MHoriz", "MVert", "MSwim", "MCharge", "MScream" }
+		{"MHoriz", "MVert", "MSwim", "MCharge", "MScream" },
 	#else
-    	{"Horiz", "Vert", "Swim", "Charge", "Scream" }
+    	{"Horiz", "Vert", "Swim", "Charge", "Scream" },
 	#endif
+        {"KHoriz", "KVert", "KSwim", "KCharge", "KScream" }
     };
 
     public GameObject sprite;
@@ -32,6 +33,7 @@ public class PlayerScript : MonoBehaviour
 
     public GameController controller;
     public int playerId = 1;
+    public int controllerId = 1;
     public int inputType = 1;
 
     public float iFrames = 1f;
@@ -85,14 +87,14 @@ public class PlayerScript : MonoBehaviour
     {
         if (alive)
         {
-            Vector3 charDir = new Vector3(Input.GetAxis(inputs[inputType, 0] + playerId), 0, Input.GetAxis(inputs[inputType, 1] + playerId));
+            Vector3 charDir = new Vector3(Input.GetAxis(inputs[inputType, 0] + controllerId), 0, Input.GetAxis(inputs[inputType, 1] + controllerId));
             if (charDir.magnitude > 0.2f) lookDir = new Vector3(charDir.normalized.x, 0, charDir.normalized.z);
             if (timer > 0) timer -= Time.deltaTime;
             if (audioSwimTimer > 0) audioSwimTimer -= Time.deltaTime;
 
             bool swimming = false;
             bool charging = false;
-            if (Input.GetAxis(inputs[inputType, 2] + playerId) > .1f)
+            if (Input.GetAxis(inputs[inputType, 2] + controllerId) > .1f)
             {
                 if (rb.velocity.magnitude < maxSpeed) rb.AddForce(Time.deltaTime * lookDir * speed);
                 if (timer <= 0)
@@ -112,7 +114,7 @@ public class PlayerScript : MonoBehaviour
                 swimming = true;
             }
 
-            if (Input.GetButtonDown(inputs[inputType, 3] + playerId))
+            if (Input.GetButtonDown(inputs[inputType, 3] + controllerId))
             {
                 int index = Random.Range(0, chargeRand.Length);
                 cutAudio.Stop();
@@ -121,7 +123,7 @@ public class PlayerScript : MonoBehaviour
             }
 
 
-                if (Input.GetButton(inputs[inputType, 3] + playerId))
+                if (Input.GetButton(inputs[inputType, 3] + controllerId))
             {
                 potency = Mathf.Min(potency + Time.deltaTime * chargeSpeed, maxPotency);
                 charging = true;
@@ -129,7 +131,7 @@ public class PlayerScript : MonoBehaviour
                 if (potency < maxPotency) rend.color = new Color(rend.color.r, rend.color.g - .3f *Time.deltaTime * maxPotency / chargeSpeed, rend.color.b - Time.deltaTime * maxPotency / chargeSpeed);
             }
 
-            if (Input.GetButtonUp(inputs[inputType, 3] + playerId))
+            if (Input.GetButtonUp(inputs[inputType, 3] + controllerId))
             {
                 controller.AddWave(transform.position + lookDir * (.3f + ((lookDir.z < 0) ? 0 : .3f)) * tileSize, new Vector2(lookDir.x, lookDir.z) * waveHeight * potency * attackMultiplyer);
                 rb.AddForce(Time.deltaTime * -lookDir * 4f * speed * potency);
@@ -145,7 +147,7 @@ public class PlayerScript : MonoBehaviour
             }
 
             //Scream audio
-            if(Input.GetButtonDown(inputs[inputType,4] + playerId))
+            if(Input.GetButtonDown(inputs[inputType,4] + controllerId))
             {
                 int index = Random.Range(0,screams.Length);
                 cutAudio.Stop();
