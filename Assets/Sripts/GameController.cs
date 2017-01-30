@@ -16,6 +16,8 @@ public class GameController : MonoBehaviour {
 
     public float wallHeight = 3f;
 
+    public GameObject winnerText;
+
     GameCamera gameCamera;
     VisualWater visualWater;
     WaterCPU waterCalculator;
@@ -123,6 +125,7 @@ public class GameController : MonoBehaviour {
         }*/
         playing = false;
 
+        winnerText.SetActive(true);
     }
 
     void GenerateWalls()
@@ -162,6 +165,7 @@ public class GameController : MonoBehaviour {
         }
     }
 
+    int lastPlayersElimitated = 0;
     // Update is called once per frame
     void Update () {
 		if (waterCalculator.IsDirty ()) {
@@ -183,7 +187,16 @@ public class GameController : MonoBehaviour {
 				UnityEngine.SceneManagement.SceneManager.LoadScene (0);
 				this.enabled = false;
 			}
-        } 
+
+            if (lastPlayersElimitated != playersEliminated.Count && playersEliminated.Count == numPlayers)
+            {
+                foreach (UnityEngine.UI.Text t in winnerText.GetComponentsInChildren<UnityEngine.UI.Text>()) {
+                    t.text = "...";
+                }
+            }
+        }
+
+        lastPlayersElimitated = playersEliminated.Count;
     }
 
 	public void AddWave(Vector3 pos, Vector2 dir) {

@@ -26,8 +26,8 @@ public class WaterCPU : MonoBehaviour {
     List<WaveInfo> reboundsToAdd;
 
     int operationCount = 35388;
-    int framesBetweenSteps = 5;
-    int operationBetweenFrames = 7077;
+    int framesBetweenSteps = 3;
+    int operationBetweenFrames = 11796;
 
     int currentOpCount = 0;
     int currentFrames = 0;
@@ -230,10 +230,10 @@ public class WaterCPU : MonoBehaviour {
         foreach (WaveInfo wi in reboundsToAdd)
         {
             currentOpCount++;
-            if (currentOpCount > (currentFrames + 1) * operationBetweenFrames)
-            {
-                yield return null;
-            }
+            //if (currentOpCount > (currentFrames + 1) * operationBetweenFrames)
+            //{
+            //    yield return null;
+            //}
 
             newPool[wi.i, wi.j, wi.k] += wi.power;
             newPool[wi.i, wi.j, 0] = Mathf.Clamp(newPool[wi.i, wi.j, 0] + oldPool[wi.i, wi.j, wi.k], poolmin, poolmax);
